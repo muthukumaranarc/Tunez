@@ -5,9 +5,9 @@ function AudioPlayer(){
     let [url, setUrl] = useState("http://localhost:8080/audio/");
 
     function change(val){
-        let data = "http://localhost:8080/audio/" + val
+        let data = "http://localhost:8080/audio/" + val;
         setUrl(data);
-
+ 
         if (audioRef.current) {
             audioRef.current.load();
             audioRef.current.play();
