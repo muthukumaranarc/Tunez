@@ -47,12 +47,7 @@ public class ArtistsService {
     }
 
     public Artists getById(String id){
-        try{
-            return data.findById(id).get();
-        }
-        catch(Exception e) {
-            return null;
-        }
+            return (data.findById(id).isPresent()) ? data.findById(id).get(): null;
     }
 
     public String getAllSong(String artistId){
@@ -75,14 +70,13 @@ public class ArtistsService {
         Artists artist = getById(artistId);
         String songs = artist.getSongsId();
 
-        String[] songsarray = songs.split("/");
+        String[] songsArray = songs.split("/");
+        for(int i=0;i<songsArray.length;i++){
 
-        for(int i=0;i<songsarray.length;i++){
+            songsArray[i] = (songsArray[i].equals(songId)) ? null : songsArray[i];
 
-            songsarray[i] = (songsarray[i] == songId) ? null : songsarray[i];
-
-            if(songsarray[i] != null){
-                out.append(songsarray[i] + ((i != songsarray.length-1)? "/" : ""));
+            if(songsArray[i] != null){
+                out.append(songsArray[i]).append((i != songsArray.length - 1) ? "/" : "");
             }
 
         }

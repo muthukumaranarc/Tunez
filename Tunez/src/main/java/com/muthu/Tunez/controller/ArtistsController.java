@@ -25,8 +25,8 @@ public class ArtistsController {
     private ArtistsService service;
 
     @PostMapping("/create/more")
-    public void createArtists(@RequestBody List<Artists> datas){
-        service.createArtist(datas);
+    public void createArtists(@RequestBody List<Artists> data){
+        service.createArtist(data);
     }
 
     @PostMapping("/create")
