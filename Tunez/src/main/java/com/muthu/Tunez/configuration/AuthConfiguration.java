@@ -27,16 +27,23 @@ public class AuthConfiguration {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
+    private final OAuth2SuccessHandler successHandler;
+
+    public AuthConfiguration(OAuth2SuccessHandler successHandler) {
+        this.successHandler = successHandler;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/user/create").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .oauth2Login(oauth -> oauth
-                        .defaultSuccessUrl("/greet", true))
+                        .successHandler(successHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
