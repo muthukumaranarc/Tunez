@@ -24,8 +24,8 @@ public class SongsController {
     @Autowired
     private SongsService service;
 
-    @PostMapping("/create/more")
-    public void CreateSong(@RequestBody List<Songs> data){
+    @PostMapping("/create/multi")
+    public void createSong(@RequestBody List<Songs> data){
         service.createSong(data);
     }
 
@@ -35,8 +35,8 @@ public class SongsController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deleteSong(@PathVariable String id) {
-        return service.deleteById(id);
+    public void deleteSong(@PathVariable String id) {
+        service.deleteById(id);
     }
     
     @GetMapping("/get/all/{limit}")

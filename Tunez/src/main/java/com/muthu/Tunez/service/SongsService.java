@@ -39,14 +39,8 @@ public class SongsService {
         data.save(song);
     }
     
-    public boolean deleteById(String id){
-        try{
+    public void deleteById(String id){
             data.deleteById(id);
-            return true;
-        }
-        catch(Exception e) {
-            return false;
-        }    
     }
     
     public List<Songs> getAll(int limit){
@@ -68,11 +62,11 @@ public class SongsService {
         List<Songs> out = new ArrayList<Songs>();
 
         String songs = (input.charAt(0) == 'C')? collection.getAllSongs(input):
-                       (input.charAt(0) == 'A') ? artist.getAllSong(input) : ""; 
+                       (input.charAt(0) == 'A') ? artist.getAllSong(input) : "";
 
         String[] songsId = songs.split("/");
-        for(int i=0;i<songsId.length;i++){
-            out.add(getById(songsId[i]));
+        for (String s : songsId) {
+            out.add(getById(s));
         }
         Collections.shuffle(out);
 

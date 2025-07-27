@@ -12,7 +12,7 @@ import com.muthu.Tunez.service.SearchService;
 
 @RestController
 @RequestMapping("/search")
-public class SearchController {
+public class SerchController {
 
     @Autowired
     private SearchService service;

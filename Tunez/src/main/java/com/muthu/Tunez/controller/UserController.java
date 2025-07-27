@@ -30,19 +30,14 @@ public class UserController {
         return service.getToken(user);
     }
 
-    @GetMapping("/greet")
-    public String greet () {
-        return "Welcome you to our websight";
-    }
-
     @DeleteMapping("/delete")
-    public Boolean deleteUser(@RequestBody Users user) {
-        return service.deleteUser(user);
+    public Boolean deleteUser() {
+        return service.deleteUser();
     }
 
     @PostMapping("/updatePass")
-    public Boolean updatePass(@RequestBody PassUpdate data) {
-        return service.updatePassword(data);
+    public Boolean updatePass(@RequestBody String newPass) {
+        return service.updatePassword(newPass);
     }
 
 }

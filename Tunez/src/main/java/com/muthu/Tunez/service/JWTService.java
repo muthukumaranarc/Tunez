@@ -3,6 +3,7 @@ package com.muthu.Tunez.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,14 @@ public class JWTService {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);  // Extraction the Expiration time
+    }
+
+    public String getCurrentUsername(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return extractUsername(bearerToken.substring(7)); // Remove "Bearer "
+        }
+        return null;
     }
 
 }

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +57,7 @@ public class UserService {
     }
 
     public String getToken(Users user) {
+        if(user.getPassword()  == null) return getToken(user.getUsername());
         Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -76,20 +76,9 @@ public class UserService {
         return jwtService.generateToken(email);
     }
 
-    public boolean deleteUser(Users user) {
-
-        if(user.getPassword() == null) return deleteOauth2User(user.getUsername());
-
+    public boolean deleteUser() {
         try{
-            Authentication authentication = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    user.getUsername(),
-                                    user.getPassword()
-                            )
-                    );
-
-            data.deleteById(user.getUsername());
+            data.deleteById(jwtService.getCurrentUsername(request));
             return true;
         }
         catch (Exception e) {
@@ -97,38 +86,17 @@ public class UserService {
         }
     }
 
-    public String getCurrentToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // Remove "Bearer "
-        }
-        return null;
-    }
 
-    public boolean deleteOauth2User(String username){
-        String token = getCurrentToken(request);
-        System.out.println(token);
-        return true;
-    }
-
-    public boolean updatePassword(PassUpdate user) {
+    public boolean updatePassword(String  newPassword) {
         try{
-            Authentication authentication = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    user.getUsername(),
-                                    user.getOldPass()
-                            )
-                    );
-            if(authentication.isAuthenticated()) {
-                data.findByUsername(user.getUsername())
-                        .setPassword(
-                                encoder.encode(user.getNewPass())
-                        );
-            }
+            String username = jwtService.getCurrentUsername(request);
+            Users user = data.findByUsername(username);
+            user.setPassword(encoder.encode(newPassword));
+            data.save(user);
             return true;
         }
         catch (Exception e) {
+            System.out.println("Error: " + e);
             return false;
         }
 

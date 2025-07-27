@@ -69,6 +69,7 @@ public class CollectionsService {
         String songs = collection.getSongsId();
         songs += "/" + songId;
         collection.setSongsId(songs);
+        data.save(collection);
     }
 
     public void deleteSong(String collectionId, String songId) {
@@ -85,6 +86,7 @@ public class CollectionsService {
             }
         }
         collection.setSongsId(out.toString());
+        data.save(collection);
     }
 
     public ResponseEntity<byte[]> getImage(String collectiontId) throws IOException {
