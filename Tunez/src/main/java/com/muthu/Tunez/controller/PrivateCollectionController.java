@@ -26,7 +26,7 @@ public class PrivateCollectionController {
     }
 
     @GetMapping("/get/{collectionName}")
-    public PrivateCollection getCollection(@PathVariable String collectionName) {
+    public PrivateCollection getCollection(@PathVariable("collectionName") String collectionName) {
         return service.getSpecificCollection(collectionName);
     }
 
@@ -42,12 +42,12 @@ public class PrivateCollectionController {
 
     //Give the input like => oldname@newname
     @PostMapping("/update/name/{collectionNames}")
-    public void updateName(@PathVariable String collectionNames) {
+    public void updateName(@PathVariable("collectionNames") String collectionNames) {
         service.UpdateCollectionName(collectionNames);
     }
 
     @DeleteMapping("delete/{collectionName}")
-    public void deleteCollection(@PathVariable String collectionName) {
+    public void deleteCollection(@PathVariable("collectionName") String collectionName) {
         service.deleteCollection(collectionName);
     }
 

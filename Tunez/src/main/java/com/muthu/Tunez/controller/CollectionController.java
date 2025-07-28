@@ -1,6 +1,7 @@
 package com.muthu.Tunez.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +36,24 @@ public class CollectionController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deleteCollection(@PathVariable String id){
+    public boolean deleteCollection(@PathVariable("id") String id){
         return service.deleteById(id);
     }
 
     @GetMapping("/get/all/{limit}")
-    public List<Collections> getAllCollections(@PathVariable int limit){
+    public List<Collections> getAllCollections(@PathVariable("limit") int limit){
         return service.getAll(limit);
     }
 
     @GetMapping("/get/{id}")
-    public Collections getCollectionById(@PathVariable String id){
+    public Collections getCollectionById(@PathVariable("id") String id){
         return service.getById(id);
     }
-    
+
     @GetMapping("/get/songs/{category}")
-    public String getAllSongs(@PathVariable String category){
+    public ArrayList<String> getAllSongs(@PathVariable("category") String category){
         return service.getAllSongs(category);
     }
-
 
     @PostMapping("/add/song")
     public void addNewSong(@RequestBody SongInput data){
@@ -66,7 +66,7 @@ public class CollectionController {
     }
 
     @GetMapping("/get/image/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable String id) throws IOException{
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException{
         return service.getImage(id);
     }
 }

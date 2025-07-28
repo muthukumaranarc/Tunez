@@ -1,6 +1,7 @@
 package com.muthu.Tunez.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,42 +36,32 @@ public class SongsController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteSong(@PathVariable String id) {
+    public void deleteSong(@PathVariable("id") String id) {
         service.deleteById(id);
     }
     
     @GetMapping("/get/all/{limit}")
-    public List<Songs> getAllSongs(@PathVariable int limit) {
+    public List<Songs> getAllSongs(@PathVariable("limit") int limit) {
         return service.getAll(limit);
     }
 
     @GetMapping("/get/{id}")
-    public Songs getSongById(@PathVariable String id){
+    public Songs getSongById(@PathVariable("id") String id){
         return service.getById(id);
     }
 
-    @GetMapping("/get/category/{category}")
-    public List<Songs> getSongByCategory(@PathVariable String category){
-        return service.getByCategory(category);
-    }
-
-    @GetMapping("/get/artist/{artist}")
-    public List<Songs> getSongByArtist(@PathVariable String artist){
-        return service.getByArtist(artist);
-    }
-
     @GetMapping("/play/{id}")
-    public ResponseEntity<InputStreamResource> streamAudio(@PathVariable String id)  throws IOException{
+    public ResponseEntity<InputStreamResource> streamAudio(@PathVariable("id") String id)  throws IOException{
         return service.streamAudio(id);
     }
 
     @GetMapping("/shuffle/{input}")
-    public List<Songs> getByString(@PathVariable String input) {
+    public ArrayList<String> getByString(@PathVariable("input") String input) {
         return service.getByString(input);
     }
 
     @GetMapping("/get/image/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable String id) throws IOException{
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException{
         return service.getImage(id);
     }
 }

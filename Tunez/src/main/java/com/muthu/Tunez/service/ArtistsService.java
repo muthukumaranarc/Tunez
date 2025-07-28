@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,38 +51,25 @@ public class ArtistsService {
             return (data.findById(id).isPresent()) ? data.findById(id).get(): null;
     }
 
-    public String getAllSong(String artistId){
+    public ArrayList<String> getAllSong(String artistId){
+        System.out.println(getById(artistId));
         return getById(artistId).getSongsId();
     }
 
     public void addSong(String artistId, String songId) {
         Artists artist = getById(artistId);
-
-        String songs = artist.getSongsId();
-        songs += "/" + songId;
-
+        ArrayList<String> songs = artist.getSongsId();
+        songs.add(songId);
         artist.setSongsId(songs);
-        
+        data.save(artist);
     }
 
     public void deleteSong(String artistId, String songId) {
-        StringBuilder out = new StringBuilder();
-
         Artists artist = getById(artistId);
-        String songs = artist.getSongsId();
-
-        String[] songsArray = songs.split("/");
-        for(int i=0;i<songsArray.length;i++){
-
-            songsArray[i] = (songsArray[i].equals(songId)) ? null : songsArray[i];
-
-            if(songsArray[i] != null){
-                out.append(songsArray[i]).append((i != songsArray.length - 1) ? "/" : "");
-            }
-
-        }
-
-        artist.setSongsId(out.toString());
+        ArrayList<String> songs = artist.getSongsId();
+        songs.remove(songId);
+        artist.setSongsId(songs);
+        data.save(artist);
     }
 
     public ResponseEntity<byte[]> getImage(String artistId) throws IOException {

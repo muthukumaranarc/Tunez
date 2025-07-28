@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class CollectionsService {
         } 
     }
 
-    public String getAllSongs(String collectionId) {
+    public ArrayList<String> getAllSongs(String collectionId) {
         try{
             return getById(collectionId).getSongsId();
         }
@@ -66,8 +67,8 @@ public class CollectionsService {
     
     public void addSong(String collectionId, String songId){
         Collections collection = getById(collectionId);
-        String songs = collection.getSongsId();
-        songs += "/" + songId;
+        ArrayList<String> songs = collection.getSongsId();
+        songs.add(songId);
         collection.setSongsId(songs);
         data.save(collection);
     }
@@ -76,16 +77,9 @@ public class CollectionsService {
         StringBuilder out = new StringBuilder();
 
         Collections collection = getById(collectionId);
-        String songs = collection.getSongsId();
-        String[] songsarray = songs.split("/");
-
-        for(int i=0;i<songsarray.length;i++){
-            songsarray[i] = (songsarray[i] == songId) ? null : songsarray[i];
-            if(songsarray[i] != null){
-                out.append(songsarray[i] + ((i != songsarray.length-1)? "/" : ""));
-            }
-        }
-        collection.setSongsId(out.toString());
+        ArrayList<String> songs = collection.getSongsId();
+        songs.remove(songId);
+        collection.setSongsId(songs);
         data.save(collection);
     }
 

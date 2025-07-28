@@ -3,12 +3,14 @@ package com.muthu.Tunez.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+
 @Document(collection = "Collections")
 public class Collections {
     @Id
     private String id;
     private String name;
-    private String songsId;
+    private ArrayList<String> songsId;
     private String image;
 
     public Collections(){}
@@ -29,11 +31,11 @@ public class Collections {
         this.name = name;
     }
 
-    public String getSongsId() {
+    public ArrayList<String> getSongsId() {
         return songsId;
     }
 
-    public void setSongsId(String songsId) {
+    public void setSongsId(ArrayList<String> songsId) {
         this.songsId = songsId;
     }
 

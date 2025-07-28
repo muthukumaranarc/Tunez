@@ -58,29 +58,14 @@ public class SongsService {
         }
     }
 
-    public List<Songs> getByString(String input){
-        List<Songs> out = new ArrayList<Songs>();
+    public ArrayList<String> getByString(String input){
 
-        String songs = (input.charAt(0) == 'C')? collection.getAllSongs(input):
-                       (input.charAt(0) == 'A') ? artist.getAllSong(input) : "";
+        ArrayList<String> songs = (input.charAt(0) == 'C')? collection.getAllSongs(input):
+                       (input.charAt(0) == 'A') ? artist.getAllSong(input) : null;
 
-        String[] songsId = songs.split("/");
-        for (String s : songsId) {
-            out.add(getById(s));
-        }
-        Collections.shuffle(out);
+        if(songs != null) Collections.shuffle(songs);
 
-        return out;
-    }
-
-    public List<Songs> getByCategory(String category) {
-        List<Songs> out = data.findAllByCategory(category);
-        Collections.shuffle(out);
-        return out;
-    }
-
-    public List<Songs> getByArtist(String artist) {
-        return data.findAllByArtist(artist); 
+        return songs;
     }
 
     public ResponseEntity<InputStreamResource> streamAudio(String id) throws IOException {
