@@ -25,9 +25,14 @@ public class PrivateCollectionService {
         return data.findAllByUsername(jwtService.getCurrentUsername(request));
     }
 
-    public void createCollection(PrivateCollection coll) {
+    public String createCollection(PrivateCollection coll) {
+        String collName = coll.getCollectionName();
+        for(PrivateCollection current : getCollections()) {
+            if(current.getCollectionName().equals(collName)) return "Collection is already exist in this user";
+        }
         coll.setUsername(jwtService.getCurrentUsername(request));
         data.save(coll);
+        return "Collection created!";
     }
 
     public PrivateCollection getSpecificCollection(String collectionName) {
@@ -64,7 +69,13 @@ public class PrivateCollectionService {
 
     }
 
-    public void deleteCollection(String collectionName) {
-        data.delete(getSpecificCollection(collectionName));
+    public String deleteCollection(String collectionName) {
+        try{
+            data.delete(getSpecificCollection(collectionName));
+            return "Collection deleted!";
+        }
+        catch (Exception e) {
+            return "Collection not exist!";
+        }
     }
 }

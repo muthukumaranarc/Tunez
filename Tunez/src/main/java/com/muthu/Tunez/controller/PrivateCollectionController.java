@@ -21,8 +21,8 @@ public class PrivateCollectionController {
     }
 
     @PostMapping("/create")
-    public void createNewCollection(@RequestBody PrivateCollection collection) {
-        service.createCollection(collection);
+    public String createNewCollection(@RequestBody PrivateCollection collection) {
+        return service.createCollection(collection);
     }
 
     @GetMapping("/get/{collectionName}")
@@ -46,9 +46,9 @@ public class PrivateCollectionController {
         service.UpdateCollectionName(collectionNames);
     }
 
-    @DeleteMapping("delete/{collectionName}")
-    public void deleteCollection(@PathVariable("collectionName") String collectionName) {
-        service.deleteCollection(collectionName);
+    @DeleteMapping("/delete/{collectionName}")
+    public String deleteCollection(@PathVariable("collectionName") String collectionName) {
+        return service.deleteCollection(collectionName);
     }
 
 }

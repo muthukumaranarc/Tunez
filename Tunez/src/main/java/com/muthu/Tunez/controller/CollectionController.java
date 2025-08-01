@@ -50,9 +50,9 @@ public class CollectionController {
         return service.getById(id);
     }
 
-    @GetMapping("/get/songs/{category}")
-    public ArrayList<String> getAllSongs(@PathVariable("category") String category){
-        return service.getAllSongs(category);
+    @GetMapping("/get/songs/{collection}")
+    public ArrayList<String> getAllSongs(@PathVariable("collection") String collection){
+        return service.getAllSongs(collection);
     }
 
     @PostMapping("/add/song")

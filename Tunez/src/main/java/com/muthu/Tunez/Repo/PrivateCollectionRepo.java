@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PrivateCollectionRepo extends MongoRepository<PrivateCollection, String> {
-    public List<PrivateCollection> findAllByUsername(String username);
+    List<PrivateCollection> findAllByUsername(String username);
 }

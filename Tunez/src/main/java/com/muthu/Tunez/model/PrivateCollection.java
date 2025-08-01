@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PrivateCollection {
 
     @Id
-    private int id;
+    private Integer id;
     private String username;
     private String collectionName;
     private ArrayList<String> songsId;
