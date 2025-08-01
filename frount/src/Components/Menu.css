@@ -1,0 +1,28 @@
+.menuBar {
+    width: 210px;
+    height: 90vh;
+    border-right: 2px solid rgba(121, 121, 121, 0.69);
+    padding-top: 15px;
+    position: absolute;
+}
+
+.menuBar > button > img {
+    height: 40px;
+}
+
+.menuBar > button {
+    display: flex;
+    height: 70px;
+    width: 200px;
+    background: none;
+    border:none;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.menuBar > button > h2 {
+    position: relative;
+    bottom: 3px;
+    margin-left: 15px;
+    font-size: 17px;
+}

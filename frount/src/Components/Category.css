@@ -1,0 +1,16 @@
+.category {
+    display: flex;
+    /* border: 1px solid red; */
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.box {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 10px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    border-radius: 6px;
+    background-color: rgba(229, 228, 228, 0.26);
+}

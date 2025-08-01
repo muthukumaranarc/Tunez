@@ -1,0 +1,86 @@
+
+
+body {
+    background-color: white;
+}
+
+.head {
+    height: 50px;
+    max-width: 10000px;
+    border-bottom: 2px solid rgba(121, 121, 121, 0.69);
+    display: flex;
+}
+
+.head > button {
+    border: none;
+    background: none;
+    position: relative;
+    top: -1px;
+    left: 10px;
+    /* border: 2px solid red; */
+}
+
+.head > button > img {
+    width: 50px;
+    height: 50px;
+}
+
+.head >  img {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    bottom: 5px;
+    left: 65px;
+}
+
+.head > h2 {
+    position: relative;
+    left: 60px;
+    bottom: 11px;
+}
+
+.search {
+    margin: 0 auto;
+    position: relative;
+    right: 75px;
+}
+
+.search > input {
+    border-radius: 10px;
+    box-shadow: none;
+    border: 2px solid rgba(186, 186, 186, 1);
+    position: relative;
+    bottom: 12px;
+    width: 400px;
+    padding-left: 55px;
+    color: rgb(111, 123, 134);
+}
+
+.search > inpu::placeholder {
+    color: rgb(46, 70, 94);
+}
+
+.search > a > img {
+    height: 30px;
+    position: absolute;
+    top: 6px;
+    left: 25px;
+}
+
+.userSec > button {
+    border: 1px solid gray;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+    background: none;
+    font-size: 20px;
+    color: rgb(58, 56, 56);
+    position: absolute;
+    right: 50px;
+    top: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
