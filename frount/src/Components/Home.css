@@ -1,0 +1,219 @@
+.deColl {
+    /* border: 2px solid red; */
+    height: 220px;
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+
+
+.dailyBeat, .ourNew {
+    height: 225px;
+    width: 478px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(73, 73, 73, 0.418);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dailyBeat > div, .ourNew > div{
+    height: 221px;
+    border: 2px solid rgba(0, 0, 0, 0.452);
+    border-radius: 20px;
+    width: 300px;
+    position: relative;
+    left: 26px;
+    background-color: white;
+}
+
+.dailyBeat > p, .ourNew > p {
+    width: 120px;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.quickPick {
+    /* border: 2px solid red; */
+    width: 80%;
+}
+
+.quickPick > h2 {
+    margin-left: -60px;
+    
+}
+
+.quickPick > .songsBlock {
+    /* border: 2px solid red; */
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-auto-flow: column;            
+    gap: 5px;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.controlS {
+    /* border: 1px solid red; */
+    /* height: 100px; */
+    width: 250px;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 180px;
+    top: 415px;
+}
+
+.controlS > .playAll{
+    height: 40px;
+    width: 150px;
+    border-radius: 20px;
+    border: 1px solid ;
+    background-color: rgba(229, 228, 228, 0.26);
+    border: 1px solid rgba(186, 186, 186, 1);
+}
+
+.controlS > .left , .controlS > .right {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    background-color: rgba(229, 228, 228, 0.26);
+}
+
+.controlS > .left > img , .controlS > .right > img {
+    height: 20px;
+    width: 20px;
+}
+
+.controlS > .left > img {
+    transform: rotate(270deg);
+}
+
+.controlS > .right > img {
+    transform: rotate(90deg);
+}
+
+button:disabled {
+    background-color: rgba(229, 228, 228, 0.26);
+}
+
+.controlC {
+    /* height: 50px;
+    width: 100px; */
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 180px;
+    top: 815px;
+    /* border: 1px solid black; */
+}
+
+.collForYou {
+    width: 85%;
+    /* border: 2px solid red; */
+}
+
+.collForYou > h2 {
+    margin-left: -30px;
+}
+
+.collectionsBlock {
+    /* border: 2px solid red; */
+    display: grid;
+    grid-auto-flow: column;            
+    gap: 12px;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.controlC > .left , .controlC > .right {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    background-color: rgba(229, 228, 228, 0.26);
+}
+
+.controlC > .left > img , .controlC > .right > img {
+    height: 20px;
+    width: 20px;
+}
+
+.controlC > .left > img {
+    transform: rotate(270deg);
+}
+
+.controlC > .right > img {
+    transform: rotate(90deg);
+}
+
+.controlA {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 180px;
+    top: 1150px;
+    /* border: 1px solid black; */
+}
+
+.Artist {
+    width: 85%;
+    /* border: 2px solid red; */
+}
+
+.Artist > h2 {
+    margin-left: -30px;
+}
+
+.artistBlock {
+    /* border: 2px solid red; */
+    display: grid;
+    grid-auto-flow: column;            
+    gap: 12px;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.controlA > .left , .controlA > .right {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    background-color: rgba(229, 228, 228, 0.26);
+    /* border: 2px solid red; */
+}
+
+.controlA > .left > img , .controlA > .right > img {
+    height: 20px;
+    width: 20px;
+    /* border: 2px solid red; */
+}
+
+.controlA > .left > img {
+    transform: rotate(270deg);
+    /* border: 2px solid red; */
+}
+
+.controlA > .right > img {
+    transform: rotate(90deg);
+}
+
+.thank {
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}

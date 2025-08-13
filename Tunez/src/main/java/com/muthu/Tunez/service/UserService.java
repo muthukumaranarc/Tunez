@@ -1,17 +1,24 @@
 package com.muthu.Tunez.service;
 
 import com.muthu.Tunez.Repo.UsersRepo;
-import com.muthu.Tunez.model.PassUpdate;
 import com.muthu.Tunez.model.Users;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -37,15 +44,31 @@ public class UserService {
         return data.findAll();
     }
 
-    public String createUser(Users user) {
-            if(data.findByUsername(user.getUsername()) == null) {
-                String token = jwtService.generateToken(user.getUsername());
-                user.setPassword(encoder.encode(user.getPassword()));
-                System.out.println(user);
-                data.save(user);
-                return token;
-            }
-            else return "Error: Username already exists";
+    public boolean getCookie(Users user, HttpServletResponse response) {
+        Users existingUser = data.findByUsername(user.getUsername());
+        if (existingUser == null) {
+            return createUser(user, response);
+        }
+        if (!encoder.matches(user.getPassword(), existingUser.getPassword())) {
+            return false;
+        }
+        String token = jwtService.generateToken(existingUser.getUsername());
+        ResponseCookie cookie = giveCookie(token, response);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        return true;
+    }
+
+    public boolean createUser(Users user, HttpServletResponse response) {
+        if(data.findByUsername(user.getUsername()) != null) return false;
+
+        String token = jwtService.generateToken(user.getUsername());
+        user.setPassword(encoder.encode(user.getPassword()));
+        data.save(user);
+
+        ResponseCookie cookie = giveCookie(token, response);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return true;
     }
 
     public String createUser(String username){
@@ -102,4 +125,63 @@ public class UserService {
 
     }
 
+    public Users getUser() {
+        try{
+            return data.findByUsername(jwtService.getCurrentUsername(request));
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    public ResponseCookie giveCookie(String token, HttpServletResponse request) {
+        return ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(Duration.ofDays(365))
+                .sameSite("Lax")
+                .build();
+    }
+
+    public boolean deleteCookie(HttpServletResponse response) {
+        try {
+            Cookie cookie = new Cookie("jwt", null);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    public String getProfilePictureUrl() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof OAuth2User oAuth2User) {
+            // Get the user attributes from OAuth2
+            String googlePic = (String) oAuth2User.getAttributes().get("picture");
+            String githubPic = (String) oAuth2User.getAttributes().get("avatar_url");
+
+            if (googlePic != null) return googlePic;
+            if (githubPic != null) return githubPic;
+        }
+
+        return "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    }
+
+    public boolean deleteByUsername(String username) {
+        try{
+            data.deleteById(username);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+    }
 }

@@ -3,6 +3,7 @@ package com.muthu.Tunez.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,19 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
+    // keep your key here (make sure it's long enough for HS256, >= 32 bytes)
     private final String securitykey = "Muthu/Create/A/Secure/Platform+=";
 
+    // ------------------- Token Creation -------------------
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
 
-        return Jwts
-                .builder()
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365))
-                .signWith(getKey())
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365))
+                .signWith(getKey())   // sign with SecretKey
                 .compact();
     }
 
@@ -35,42 +38,77 @@ public class JWTService {
         return Keys.hmacShaKeyFor(securitykey.getBytes(StandardCharsets.UTF_8));
     }
 
+    // ------------------- Extract / Parse -------------------
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject); // Extract username with Claims
+        return extractClaim(token, Claims::getSubject);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
-        final Claims claims = extractAllClaims(token); // Extract all Claims with our token
+        final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()  // Extraction all Claims with jwts.parser()
-                .verifyWith(getKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            // Correct parser usage for JJWT 0.11.x+
+            return Jwts.parser()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            // Bubble up a clear runtime exception; your filter/controller can catch it as needed
+            throw new RuntimeException("Failed to parse/validate JWT token: " + e.getMessage(), e);
+        }
     }
 
+    // ------------------- Validation -------------------
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUsername(token);  // Getting username with our extractUsername method
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));  // Verifying the token with username and Expire time
+        final String userName = extractUsername(token);
+        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());  //Validation the Expiration with comparing expatriation and current date
+        return extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);  // Extraction the Expiration time
+        return extractClaim(token, Claims::getExpiration);
     }
 
-    public String getCurrentUsername(HttpServletRequest request) {
+    // ------------------- Request helpers (header + cookie) -------------------
+    /**
+     * Look for token in Authorization header first (Bearer ...),
+     * then fallback to cookie named 'jwt' or 'jwtToken' (HttpOnly).
+     */
+    public String getTokenFromRequest(HttpServletRequest request) {
+        // 1) Authorization header
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return extractUsername(bearerToken.substring(7)); // Remove "Bearer "
+            return bearerToken.substring(7);
         }
+
+        // 2) HttpOnly Cookie
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if ("jwt".equals(c.getName()) || "jwtToken".equals(c.getName())) {
+                    return c.getValue();
+                }
+            }
+        }
+
         return null;
     }
 
+    /**
+     * Convenience: return current username by reading token from request (header or cookie).
+     */
+    public String getCurrentUsername(HttpServletRequest request) {
+        String token = getTokenFromRequest(request);
+        if (token != null) {
+            return extractUsername(token);
+        }
+        return null;
+    }
 }

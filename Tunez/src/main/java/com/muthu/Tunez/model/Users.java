@@ -10,21 +10,12 @@ public class Users {
     @Id
     private String username;
     private String password;
-    private String privateCollection;
 
     public Users() {}
 
     public Users(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public String getPrivateCollection() {
-        return privateCollection;
-    }
-
-    public void setPrivateCollection(String privateCollection) {
-        this.privateCollection = privateCollection;
     }
 
     public String getPassword() {
@@ -48,7 +39,6 @@ public class Users {
         return "Users{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", privateCollection='" + privateCollection + '\'' +
                 '}';
     }
 }

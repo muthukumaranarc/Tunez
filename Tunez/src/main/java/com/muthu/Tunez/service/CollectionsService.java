@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.muthu.Tunez.model.Songs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.muthu.Tunez.Repo.CollectionsRepo;
@@ -22,6 +25,13 @@ public class CollectionsService {
     
     @Autowired
     private CollectionsRepo data;
+
+    @Autowired
+    private SongsService songs;
+
+    private List<Songs> DailyBeat = new ArrayList<Songs>();
+    private List<Songs> NewCollection = new ArrayList<Songs>();
+    private LocalDate lastUpdated;
 
     public void createCollection(List<Collections> collections){
         data.saveAll(collections);
@@ -98,5 +108,31 @@ public class CollectionsService {
         headers.setContentType(MediaType.IMAGE_JPEG);
 
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    public List<Songs> getDailyBeat() {
+        if (DailyBeat == null || DailyBeat.isEmpty() || !LocalDate.now().equals(lastUpdated)) {
+            updateDataDaily(); // initialize if first time or new day
+        }
+        return DailyBeat;
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // Every day at 00:00
+    public void updateDataDaily() {
+        DailyBeat = songs.getAll(20);
+        lastUpdated = LocalDate.now();
+    }
+
+    public List<Songs> getNewCollection() {
+        if (NewCollection == null || NewCollection.isEmpty() || !LocalDate.now().equals(lastUpdated)) {
+            updateNewCollections(); // initialize if first time or new day
+        }
+        return NewCollection;
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // Every day at 00:00
+    private void updateNewCollections() {
+        NewCollection =  songs.getAll(20);
+        lastUpdated = LocalDate.now();
     }
 }

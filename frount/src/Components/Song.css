@@ -1,0 +1,43 @@
+.song {
+    height: 70px;
+    width: 430px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    background: none;
+    margin-right: 25px;
+    /* border: 1px solid black; */
+}
+
+.song > div {
+    height: 60px;
+    width: 60px;
+    background-color: rgba(217, 217, 217, 1);
+    border-radius: 5px;
+    margin: 3px;
+    position: absolute;
+}
+
+.songName {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.753);
+    position: relative;
+    left: 75px;
+    bottom: 7px;
+}
+
+.songAuthor {
+    text-align: left;
+    font-size: 17px;
+    position: relative;
+    bottom: 42px;
+    left: 75px;
+    color: rgba(71, 71, 71, 0.596);
+    font-weight: bold;
+}
+.song > div > .img {
+    height: 60px;
+    width: 60px;
+}

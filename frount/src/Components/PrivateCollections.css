@@ -1,0 +1,21 @@
+.collBox {
+    background: none;
+    height: 250px;
+    width: 200px;
+    margin: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.438);
+    border-radius: 10px;
+}
+
+.collBox > div {
+    height: 170px;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.438);
+    margin: 5px;
+    width: 80%;
+}
+
+.collBox > h2 {
+    font-size: 20px;
+    font-weight: bold;
+}

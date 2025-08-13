@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.muthu.Tunez.model.Songs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,5 +69,15 @@ public class CollectionController {
     @GetMapping("/get/image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException{
         return service.getImage(id);
+    }
+
+    @GetMapping("/get/DailyBeat")
+    public List<Songs> getDailyBeat() {
+        return service.getDailyBeat();
+    }
+
+    @GetMapping("/get/NewCollection")
+    public List<Songs> getNewCollections() {
+        return service.getNewCollection();
     }
 }

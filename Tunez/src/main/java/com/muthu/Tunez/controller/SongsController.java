@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.muthu.Tunez.Repo.CollectionsRepo;
+import com.muthu.Tunez.model.Collections;
+import com.muthu.Tunez.service.CollectionsService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +29,11 @@ public class SongsController {
 
     @Autowired
     private SongsService service;
+
+    @GetMapping("/update/{data}")
+    public void update(@PathVariable("data") String data) {
+        service.updateAllImageFields(data);
+    }
 
     @PostMapping("/create/multi")
     public void createSong(@RequestBody List<Songs> data){
@@ -51,8 +61,11 @@ public class SongsController {
     }
 
     @GetMapping("/play/{id}")
-    public ResponseEntity<InputStreamResource> streamAudio(@PathVariable("id") String id)  throws IOException{
-        return service.streamAudio(id);
+    public void streamAudio(@PathVariable String id,
+                            HttpServletRequest request,
+                            HttpServletResponse response) throws IOException {
+
+        service.streamAudio(id,request, response);
     }
 
     @GetMapping("/shuffle/{input}")
@@ -63,5 +76,15 @@ public class SongsController {
     @GetMapping("/get/image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException{
         return service.getImage(id);
+    }
+
+    @GetMapping("get/image/any")
+    public ResponseEntity<byte[]> getAnyImage() throws IOException {
+        return service.getAnySong();
+    }
+
+    @GetMapping("get/image/any/any")
+    public ResponseEntity<byte[]> getAnyImageAny() throws IOException {
+        return service.getAnySong();
     }
 }

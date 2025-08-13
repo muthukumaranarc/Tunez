@@ -1,0 +1,105 @@
+
+.EcontrolC {
+    /* height: 50px;
+    width: 100px; */
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 180px;
+    top: 155px;
+    /* border: 1px solid black; */
+}
+
+.EcollForYou {
+    width: 85%;
+    /* border: 2px solid red; */
+}
+
+.EcollForYou > h2 {
+    margin-left: -30px;
+}
+
+.EcollectionsBlock {
+    /* border: 2px solid red; */
+    display: grid;
+    grid-auto-flow: column;            
+    gap: 12px;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.EcontrolC > .left , .EcontrolC > .right {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    background-color: rgba(229, 228, 228, 0.26);
+}
+
+.EcontrolC > .left > img , .EcontrolC > .right > img {
+    height: 20px;
+    width: 20px;
+}
+
+.EcontrolC > .left > img {
+    transform: rotate(270deg);
+}
+
+.EcontrolC > .right > img {
+    transform: rotate(90deg);
+}
+
+.EcontrolA {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 180px;
+    top: 490px;
+    /* border: 1px solid black; */
+}
+
+.EArtist {
+    width: 85%;
+    /* border: 2px solid red; */
+}
+
+.EArtist > h2 {
+    margin-left: -30px;
+}
+
+.EartistBlock {
+    /* border: 2px solid red; */
+    display: grid;
+    grid-auto-flow: column;            
+    gap: 12px;
+    overflow-x: auto;
+    position: relative;
+    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.EcontrolA > .left , .EcontrolA > .right {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(186, 186, 186, 1);
+    background-color: rgba(229, 228, 228, 0.26);
+    /* border: 2px solid red; */
+}
+
+.EcontrolA > .left > img , .EcontrolA > .right > img {
+    height: 20px;
+    width: 20px;
+    /* border: 2px solid red; */
+}
+
+.EcontrolA > .left > img {
+    transform: rotate(270deg);
+    /* border: 2px solid red; */
+}
+
+.EcontrolA > .right > img {
+    transform: rotate(90deg);
+}

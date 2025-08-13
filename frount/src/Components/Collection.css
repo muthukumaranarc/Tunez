@@ -1,0 +1,24 @@
+.collection {
+    height: 230px;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: white;
+    text-align: center;
+}
+
+.collection > div {
+    position: relative;
+    top: 10px;
+    height: 160px;
+    width: 160px;
+    background-color: rgba(217, 217, 217, 1);
+    border: 2px solid rgba(73, 73, 73, 0.418);
+    border-radius: 5px;
+    margin: auto;
+}
+
+.collection > h2 {
+    font-size: 20px;
+}

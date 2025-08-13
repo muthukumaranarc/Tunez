@@ -10,5 +10,6 @@ import com.muthu.Tunez.model.Songs;
 public interface SongsRepo extends MongoRepository<Songs, String>{
     public List<Songs> findAllByCategory(String category);
     public List<Songs> findAllByArtist(String artist);
+    List<Songs> findByImage(String image);
     public List<Songs> findByNameStartingWithIgnoreCase(String input);
 }

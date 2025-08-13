@@ -1,0 +1,111 @@
+/* layout */
+.Collections {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* create box (plus button) */
+.collBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 200px;
+  height: 140px;
+  border: 1px dashed #d0d6dd;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.plus-icon {
+  width: 120px;
+  height: 64px;
+  border: none;
+}
+
+/* modal */
+.createColl {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 50;
+}
+
+.createInner {
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 6px 24px rgba(14, 30, 37, 0.12);
+}
+
+.createTitle {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* form */
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.name-input,
+.custom-select {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #d6dbe4;
+  border-radius: 8px;
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  width: 90%;
+}
+
+.name-input:focus,
+.custom-select:focus {
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 4px rgba(79,140,255,0.08);
+}
+
+/* remove native select arrow on some browsers, keep a simple one */
+.custom-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #666 50%),
+                    linear-gradient(135deg, #666 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* buttons */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancel-btn,
+.create-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  background: #f0f2f5;
+  color: #333;
+}
+
+.create-btn {
+  background: #2b6ef6;
+  color: #fff;
+}

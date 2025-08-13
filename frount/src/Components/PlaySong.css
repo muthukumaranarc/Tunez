@@ -1,0 +1,81 @@
+.PlaySong {
+    border: 1px solid rgba(73, 73, 73, 0.418);
+    border-radius: 10px;
+    height: 80px;
+    width: 1000px;
+    position: fixed;
+    bottom: 20px;
+    left: 58%;
+    transform: translate(-50%, 0%);
+    z-index: 5;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.PlaySong > h2 {
+    position: relative;
+    left: 85px;
+    bottom: -4px;
+    font-size: 17px;
+    z-index: 2;
+}
+
+.playControl {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.player {
+    position: relative;
+    right: 180px;
+    bottom: 15px;
+}
+
+.playButton {
+    position: relative;
+    left: 200px;
+}
+
+.playControl > .prev {
+    border: none;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    position: relative;
+    right: 115px;
+    top: 3px;
+}
+
+.playControl > .next {
+    border: none;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    position: relative;
+    right:45px;
+    top: 3px;
+}
+
+.next:active {
+    transform: scale(1.1);
+}
+
+.prev:active {
+    transform: scale(1.1);
+}
+
+.addSong {
+    font-size: 30px;
+    position: fixed;
+    top: 20px;
+    left: 700px;
+    border: 2px solid rgb(99, 98, 98);
+    background-color: rgba(228, 228, 228, 0.342);
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

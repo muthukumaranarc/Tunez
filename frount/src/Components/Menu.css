@@ -1,23 +1,24 @@
 .menuBar {
     width: 210px;
-    height: 90vh;
+    height: 92vh;
     border-right: 2px solid rgba(121, 121, 121, 0.69);
-    padding-top: 15px;
-    position: absolute;
+    padding-top: 10px; 
+    position: fixed;
 }
 
 .menuBar > button > img {
-    height: 40px;
+    height: 35px;
 }
 
 .menuBar > button {
     display: flex;
-    height: 70px;
-    width: 200px;
+    height: 45px;
+    width: 150px;
     background: none;
     border:none;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: 20px;
+    /* border: 2px solid red */
 }
 
 .menuBar > button > h2 {
@@ -25,4 +26,31 @@
     bottom: 3px;
     margin-left: 15px;
     font-size: 17px;
+}
+
+.NewCollDev {
+    border-top: 2px solid rgba(121, 121, 121, 0.69);
+    height: 60px;
+    width: 200px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.NewCollDev > button {
+    background-color: rgba(139, 139, 139, 0.342);
+    border:2px solid rgba(121, 121, 121, 0.562);
+    border-radius: 20px;
+    height: 40px;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.NewCollDev > button > p {
+    font-size: 14px;
+    font-weight: bold;
 }
