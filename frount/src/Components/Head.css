@@ -15,7 +15,7 @@ body {
     z-index: 2;
 }
 
-.head > button {
+.head > .menu {
     border: none;
     background: none;
     position: relative;
@@ -90,4 +90,19 @@ body {
 
 button:hover {
     cursor: pointer;
+}
+
+.loginHead {
+    position: absolute;
+    right: 5vw;
+    top: 15px;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    background: linear-gradient(90deg, #C226FF 0%, #9D06FF 36%, #0025FF 100%);
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
 }

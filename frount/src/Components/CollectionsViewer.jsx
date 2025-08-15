@@ -1,7 +1,14 @@
+import { useEffect } from 'react';
 import './CollectionsViewer.css';
 import Song from './Song';
+import arrow from '../assets/arrow.png';
 
-function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needImage}) {
+function CollectionsViewer({setCollView,  view, setSong, setPlay, setPlayAll, setSongs, needImage, setSearchStatus}) {
+
+    useEffect(() => {
+        setSearchStatus(false);
+    },[setSearchStatus])
+
     let name = "";
     let songs = [];
     let image = "";
@@ -11,11 +18,11 @@ function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needI
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
-        image = `http://localhost:7000/song/get/image/${songs[0].id}`;
+        image = `http://localhost:7000/song/get/image/${songs[0]?.id}`;
     } 
     else if(typeof view[0].artist != 'undefined'){
         name = view[0].artist;
-        image = `http://localhost:7000/artist/get/image/${view[0].id}`;
+        image = `http://localhost:7000/artist/get/image/${view[0]?.id}`;
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
@@ -25,11 +32,11 @@ function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needI
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
-        image = `http://localhost:7000/song/get/image/${songs[0].id}`;
+        image = `http://localhost:7000/song/get/image/${songs[0]?.id}`;
     }
     else {
         name = view[0].name;
-        image = `http://localhost:7000/collection/get/image/${view[0].id}`;
+        image = `http://localhost:7000/collection/get/image/${view[0]?.id}`;
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
@@ -46,6 +53,7 @@ function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needI
 
     return (
         <>
+        <button onClick={() => {setCollView(false)}} style={{backgroundImage:`url(${arrow})`}} className="GoBack"></button>
         <button className='PlayAll' onClick={handle}>Play All</button>
         <div className='collectionHead'>
             <div className='collImg' style={{
@@ -59,7 +67,7 @@ function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needI
 
         <div className='collSongs'>
         {
-            songs?.map((item, ind) => (
+            songs.map((item, ind) => (
                 <Song 
                     key={ind} 
                     data={item} 
@@ -72,8 +80,8 @@ function CollectionsViewer({ view, setSong, setPlay, setPlayAll, setSongs, needI
                 />
             ))
         }
-        </div>
-
+        <p>No more songs are available yet</p>
+        </div> <br/><br/><br/><br/>
         </>
     )
 }

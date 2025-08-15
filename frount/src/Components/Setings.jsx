@@ -1,47 +1,72 @@
-import './setings.css';
-import React, { useEffect, useState } from 'react';
+// import { useState } from 'react'; 
+import './setings.css'; 
+import userim from '../assets/user.png'
 
-function Setings() {
+function Setings({ user, picUrl, setLogbut }) {
+  const baseURL = import.meta.env.VITE_API_URL;
 
-  const [picUrl, setPicUrl] = useState('');
+  const handleLogOut = async () => {
+    try {
+      const res = await fetch(`${baseURL}/user/delete/cookie`, {
+        method: "DELETE",
+        credentials: "include"
+      });
 
-  useEffect(() => {
-    fetch('http://localhost:7000/user/profile-pic', {
-      credentials: 'include' 
-    })
-      .then(res => res.text()) 
-      .then(url => setPicUrl(url.trim().replace(/^"|"$/g, '')))
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        console.error("Failed to delete cookie");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
-      .catch(err => console.error(err));
-  }, []);
+  const handleDeleteUser = async () => {
+    try {
+      await fetch(`${baseURL}/user/delete`, {
+        method: "DELETE",
+        credentials: "include"
+      });
+      await handleLogOut();
+    } catch (error) {
+      console.error("Delete user error:", error);
+    }
+  };
 
-  console.log("Profile picture URL:", picUrl);
-
-
-    return (
-        <>
-        <div>
-      {picUrl ? (
-        <img 
-          src={picUrl} 
-          alt="Profile" 
-          style={{ width: '80px', height: '80px', borderRadius: '50%' }} 
-        />
-      ) : (
-        <p>Loading profile picture...</p>
-      )}
-      <div style={{
-        backgroundImage: `url(${picUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height:"100px",
-        width:"100"
-      }}>
-
+  return (
+    <div className="seting">
+      <div className="userSlid">
+        {picUrl ? (
+          <img
+            src={user != null ? picUrl : userim}
+            alt="Profile"
+            style={{ width: "80px", height: "80px", borderRadius: "50%" }}
+          />
+        ) : (
+          <div style={{ width: "80px", height: "80px", borderRadius: "50%" }}></div>
+        )}
+        <p>{user != null ? user?.name : "No user"}</p>
+        <button onClick={() => setLogbut(true)}>Switch account</button>
       </div>
-    </div>
+
+      {user != null && (
+        <>
+          <button className="deleteUser" onClick={handleDeleteUser}>Delete user</button>
+          <button className="logOut" onClick={handleLogOut}>Log out</button>
         </>
-    )
+      )}
+
+      <a
+        className="viewDev"
+        href="https://muthukumaran-portfolio.web.app"
+        target="_blank"
+        rel="noreferrer"
+      >
+        View developer
+      </a>
+    </div>
+  );
 }
 
 export default Setings;

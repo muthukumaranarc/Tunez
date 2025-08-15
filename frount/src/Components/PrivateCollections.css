@@ -8,14 +8,19 @@
 }
 
 .collBox > div {
-    height: 170px;
+    height: 35vh;
+    width: 95%;
     border-radius: 10px;
     border: 2px solid rgba(0, 0, 0, 0.438);
     margin: 5px;
-    width: 80%;
 }
 
 .collBox > h2 {
     font-size: 20px;
     font-weight: bold;
+}
+
+.delete {
+    position: relative;
+    bottom: 250px;
 }

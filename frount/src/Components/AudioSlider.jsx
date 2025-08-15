@@ -6,7 +6,6 @@ import './AudioSlider.css';
 function MyAudioPlayer({ url, setSongOver }) {
   const playerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       const audioEl = playerRef.current?.audio?.current;
@@ -50,7 +49,6 @@ function MyAudioPlayer({ url, setSongOver }) {
         onLoadStart={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        onWaiting={() => setIsPlaying(false)}
         onEnded={() => setSongOver(true)}
         style={{
           backgroundColor:"white",

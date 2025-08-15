@@ -79,3 +79,78 @@
     justify-content: center;
     align-items: center;
 }
+
+/* Modal overlay */
+.popup-overlay {
+  position: fixed;
+  /* top: -400px; */
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9;
+}
+
+/* Modal card */
+.popup-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  width: 90%;
+  max-width: 380px;
+  max-height: 70vh;
+  overflow: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Header row */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.popup-close {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* List of collections */
+.popup-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.popup-list li + li {
+  margin-top: 8px;
+}
+
+.popup-list button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.popup-list button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.popup-error {
+  background: #fff6f6;
+  border: 1px solid #f5c2c2;
+  color: #8a1f1f;
+  padding: 10px;
+  border-radius: 10px;
+}

@@ -1,0 +1,62 @@
+.seting {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.userSlid {
+    height: 150px;
+    width: 85%;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    border: 2px solid rgb(112, 112, 112);
+    border-radius: 20px;
+}
+
+.userSlid > p {
+    margin-left: 20px;    
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.userSlid > button {
+    position: absolute;
+    right: 15vw;
+    font-size: 18px;
+    border: none;
+    background: none;
+    color: rgb(23, 109, 23);
+}
+
+.deleteUser, .logOut {
+    width: 30%;
+    margin-top: 10px;
+    font-size: 18px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: red;
+    padding-left: 20px;
+}
+ 
+.deleteUser {
+    margin-top: 30px;
+}
+
+.viewDev {
+    background: linear-gradient(90deg, #C226FF 0%, #9D06FF 36%, #0025FF 100%);
+    width: 280px;
+    height: 55px;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 8vh;
+}

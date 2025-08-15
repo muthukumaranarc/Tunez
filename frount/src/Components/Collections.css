@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   width: 200px;
   height: 140px;
@@ -19,12 +20,6 @@
   padding: 12px;
   background: #fff;
   cursor: pointer;
-}
-
-.plus-icon {
-  width: 120px;
-  height: 64px;
-  border: none;
 }
 
 /* modal */

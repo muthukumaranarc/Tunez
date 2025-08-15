@@ -78,4 +78,18 @@ public class PrivateCollectionService {
             return "Collection not exist!";
         }
     }
+
+    public boolean deleteCollectionByUserName(String userName) {
+        try{
+            List<PrivateCollection> list = data.findAllByUsername(userName);
+            for(PrivateCollection val : list) {
+                data.delete(val);
+            }
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+    }
 }

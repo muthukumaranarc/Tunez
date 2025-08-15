@@ -1,5 +1,5 @@
 .menuBar {
-    width: 210px;
+    width: 200px;
     height: 92vh;
     border-right: 2px solid rgba(121, 121, 121, 0.69);
     padding-top: 10px; 
@@ -13,11 +13,11 @@
 .menuBar > button {
     display: flex;
     height: 45px;
-    width: 150px;
+    width: 160px;
     background: none;
     border:none;
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
     /* border: 2px solid red */
 }
 
@@ -31,7 +31,7 @@
 .NewCollDev {
     border-top: 2px solid rgba(121, 121, 121, 0.69);
     height: 60px;
-    width: 200px;
+    width: 190px;
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -53,4 +53,14 @@
 .NewCollDev > button > p {
     font-size: 14px;
     font-weight: bold;
+}
+
+.show {
+    height:35px;
+    width:5px;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    top: 1px;
+    margin-right: 5px;
 }

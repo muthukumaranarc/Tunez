@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +31,9 @@ public class UserService {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private PrivateCollectionService privateCollectionService;
 
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
@@ -101,7 +103,9 @@ public class UserService {
 
     public boolean deleteUser() {
         try{
-            data.deleteById(jwtService.getCurrentUsername(request));
+            String username = jwtService.getCurrentUsername(request);
+            data.deleteById(username);
+            privateCollectionService.deleteCollectionByUserName(username);
             return true;
         }
         catch (Exception e) {

@@ -1,0 +1,23 @@
+.searchRes{
+    /* border: 2px solid red; */
+    width: 80vw;
+    margin-top: 20px;
+}
+
+.searchRes > div > p {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.searchRes > .songs,
+.searchRes > .collections,
+.searchRes > .artists {
+    margin-left: 20px;
+}
+
+.searchRes > .collections > div,
+.searchRes > .artists > div{
+    /* border: 2px solid red; */
+    display: flex;
+    gap: 20px;
+}

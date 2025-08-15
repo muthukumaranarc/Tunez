@@ -3,13 +3,12 @@ import "./Collections.css";
 import plus from "../assets/Plus.png";
 import PrivateCollections from "./PrivateCollections";
 
-function Collections({ privateColl = [], setCollView, setPrivateCollLoading }) {
+function Collections({ privateColl = [], setCollView, setPrivateCollLoading, user , get, setGet}) {
   // modal open state
-  const [get, setGet] = useState(false);
+  
 
   const [formData, setFormData] = useState({
     name: "",
-    visibility: "Private",
   });
 
   const baseURL = import.meta.env.VITE_API_URL ?? "";
@@ -19,66 +18,44 @@ function Collections({ privateColl = [], setCollView, setPrivateCollLoading }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await CreateHandler(formData);
+    await handlePrivate(formData.name);
   };
 
-  const CreateHandler = async (data) => {
+  const handlePrivate = async (name) => {
     try {
-      if (data.visibility === "private") {
-        await handlePrivate(data.name);
-      } else {
-        await handlePublic(data.name);
+      const body = {
+        id: `${privateColl.length}`,
+        collectionName: name || "New Collection",
+        songsId: [],
+      };
+
+      const res = await fetch(`${baseURL}/privateCollection/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create private collection");
       }
+
+      setPrivateCollLoading(true);
     } catch (err) {
       console.error("Create failed:", err);
     } finally {
-      setFormData({ name: "", visibility: "public" });
+      setFormData({ name: "" });
       setGet(false);
     }
   };
 
-  const handlePublic = async (name) => {
-    const body = {
-      id: `${privateColl.length}`,
-      collectionName: name || "New Collection",
-      songsId: [],
-    };
-
-    const res = await fetch(`${baseURL}/collection/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to create public collection");
-    }
-
-    setPrivateCollLoading(true);
-  };
-
-  const handlePrivate = async (name) => {
-    const body = {
-      id: `${privateColl.length}`,
-      collectionName: name || "New Collection",
-      songsId: [],
-    };
-
-    const res = await fetch(`${baseURL}/privateCollection/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to create private collection");
-    }
-
-    setPrivateCollLoading(true);
+  const handleCreateNew = () => {
+    if (user == null) alert("Login to create");
+    else setGet(true);
   };
 
   return (
@@ -92,14 +69,15 @@ function Collections({ privateColl = [], setCollView, setPrivateCollLoading }) {
           />
         ))}
 
-        {/* open modal */}
-        <button className="collBox" onClick={() => setGet(true)}>
+        <button className="collBox" onClick={handleCreateNew}>
           <div
-            className="plus-icon"
             style={{
               backgroundImage: `url(${plus})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              height:"100px",
+              width:"100px",
+              border:"none"
             }}
           />
           <h2>Create Collection</h2>
@@ -122,24 +100,13 @@ function Collections({ privateColl = [], setCollView, setPrivateCollLoading }) {
                 required
               />
 
-              <select
-                id="visibility"
-                name="visibility"
-                className="custom-select"
-                value={formData.visibility}
-                onChange={handleChange}
-              >
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-              </select>
-
               <div className="button-group">
                 <button
                   type="button"
                   className="cancel-btn"
                   onClick={() => {
                     setGet(false);
-                    setFormData({ name: "", visibility: "public" });
+                    setFormData({ name: "" });
                   }}
                 >
                   Cancel
