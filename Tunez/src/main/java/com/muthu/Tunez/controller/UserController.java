@@ -28,8 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public Boolean createUser(@RequestBody Users user, HttpServletResponse response) {
+    public String createUser(@RequestBody Users user, HttpServletResponse response) {
         return service.createUser(user, response);
+    }
+
+    @PostMapping("/loginUser")
+    public String Login(@RequestBody Users user, HttpServletResponse response) {
+        return service.login(user, response);
     }
 
     @GetMapping("/token")
@@ -62,4 +67,8 @@ public class UserController {
         return service.getProfilePictureUrl();
     }
 
+    @DeleteMapping("/deleteUsers")
+    public boolean deleteUsers() {
+        return service.deleteAllUsers();
+    }
 }

@@ -42,6 +42,17 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
+    public boolean deleteAllUsers() {
+        try {
+            data.deleteAll();
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println("Error In Deleting Users: " + e);
+            return false;
+        }
+    }
+
     public List<Users> getUsers(){
         return data.findAll();
     }
@@ -49,7 +60,7 @@ public class UserService {
     public boolean getCookie(Users user, HttpServletResponse response) {
         Users existingUser = data.findByUsername(user.getUsername());
         if (existingUser == null) {
-            return createUser(user, response);
+            return false;
         }
         if (!encoder.matches(user.getPassword(), existingUser.getPassword())) {
             return false;
@@ -60,17 +71,29 @@ public class UserService {
         return true;
     }
 
-    public boolean createUser(Users user, HttpServletResponse response) {
-        if(data.findByUsername(user.getUsername()) != null) return false;
+    public String createUser(Users user, HttpServletResponse response) {
+        if(data.findByUsername(user.getUsername()) == null) {
+            String token = jwtService.generateToken(user.getUsername());
+            user.setPassword(encoder.encode(user.getPassword()));
+            data.save(user);
+            ResponseCookie cookie = giveCookie(token, response);
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            return "Success";
+        }
+        else return "User already exist";
+    }
 
-        String token = jwtService.generateToken(user.getUsername());
-        user.setPassword(encoder.encode(user.getPassword()));
-        data.save(user);
-
-        ResponseCookie cookie = giveCookie(token, response);
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-        return true;
+    public String login(Users user, HttpServletResponse response) {
+        if(data.findByUsername(user.getUsername()) != null) {
+            if(encoder.matches(user.getPassword(), data.findByUsername(user.getUsername()).getPassword())) {
+                String token = jwtService.generateToken(user.getUsername());
+                ResponseCookie cookie = giveCookie(token, response);
+                response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+                return "Success";
+            }
+            else return "Password is wrong";
+        }
+        else return "User not Exist";
     }
 
     public String createUser(String username){
