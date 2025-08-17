@@ -67,6 +67,6 @@ public class OAuth2SuccessHandler implements org.springframework.security.web.au
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         // Redirect back to frontend
-        response.sendRedirect("http://10.63.112.41:5173");
+        response.sendRedirect("http://localhost:5173");
     }
 }

@@ -5,6 +5,7 @@ import arrow from '../assets/arrow.png';
 
 function CollectionsViewer({setCollView,  view, setSong, setPlay, setPlayAll, setSongs, needImage, setSearchStatus}) {
 
+    const baseURL = import.meta.env.VITE_API_URL;
     useEffect(() => {
         setSearchStatus(false);
     },[setSearchStatus])
@@ -18,11 +19,11 @@ function CollectionsViewer({setCollView,  view, setSong, setPlay, setPlayAll, se
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
-        image = `http://localhost:7000/song/get/image/${songs[0]?.id}`;
+        image = `${baseURL}/song/get/image/${songs[0]?.id}`;
     } 
     else if(typeof view[0].artist != 'undefined'){
         name = view[0].artist;
-        image = `http://localhost:7000/artist/get/image/${view[0]?.id}`;
+        image = `${baseURL}/artist/get/image/${view[0]?.id}`;
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
@@ -32,11 +33,11 @@ function CollectionsViewer({setCollView,  view, setSong, setPlay, setPlayAll, se
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }
-        image = `http://localhost:7000/song/get/image/${songs[0]?.id}`;
+        image = `${baseURL}/song/get/image/${songs[0]?.id}`;
     }
     else {
         name = view[0].name;
-        image = `http://localhost:7000/collection/get/image/${view[0]?.id}`;
+        image = `${baseURL}/collection/get/image/${view[0]?.id}`;
         for(let i = 1;i< view.length ; i++){
             songs[i-1] = view[i];
         }

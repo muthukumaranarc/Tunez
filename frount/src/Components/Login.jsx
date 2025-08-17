@@ -6,8 +6,9 @@ import logo from '../assets/Only_Logo_NoBackground.png';
 import back from '../assets/background.png';
 import man from '../assets/SingingMan.png';
 
-function Login({ setLogbut }) {
+function Login( ) {
     const baseURL = import.meta.env.VITE_API_URL;
+    let [create, setCreate] = useState(true);
 
     let [formData, setFormData] = useState({
         username: "",
@@ -25,34 +26,43 @@ function Login({ setLogbut }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        // Validation: Username cannot be the same as password
-        if (formData.username && formData.username === formData.password) {
-            setError("Username and password cannot be the same");
-            return; // Stop form submission
+    if (formData.username && formData.username === formData.password) {
+        setError("Username and password cannot be the same");
+        return; // Stop form submission
+    }
+
+    fetch(`${baseURL}/user/${create ? 'create' : 'loginUser'}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(formData)
+    })
+    .then(async (res) => {
+        const responseText = await res.text();
+        if(responseText === "Success") window.location.reload();
+        else {
+            alert(responseText);
+            document.getElementById("user").innerText = ""
+            document.getElementById("pass").innerText = ""
         }
+    })
+    .catch((err) => {
+        console.error("Network error:", err);
+    });
+};
 
-        fetch(`${baseURL}/user/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify(formData)
-        })
-        .then(data => console.log(data))
-        .then(() => {
-            setLogbut(false);
-        });
-    };
+
 
     const handleGoogleLogin = () => {
-        window.location.href = "http://localhost:7000/oauth2/authorization/google";
+        window.location.href = `${baseURL}/oauth2/authorization/google`;
     };
 
     const handleGithubLogin = () => {
-        window.location.href = "http://localhost:7000/oauth2/authorization/github";
+        window.location.href = `${baseURL}/oauth2/authorization/github`;
     };
 
     return (
@@ -65,8 +75,8 @@ function Login({ setLogbut }) {
             </div>
             <div className="Login">
                 <div className='LoginDesk'>
-                    <h2>Connect with us</h2>
-                    <form onSubmit={handleSubmit}>
+                    <h2>{create? "Create Account" : "Login"}</h2>
+                    <form onSubmit={handleSubmit} onKeyDown={(e) => {if (e.key === "Enter") e.preventDefault();}}>
                         <input
                             type="text"
                             name="username"
@@ -74,6 +84,7 @@ function Login({ setLogbut }) {
                             value={formData.username}
                             onChange={handleChange}
                             placeholder="Username"
+                            id="user"
                         />
                         <br />
 
@@ -84,6 +95,7 @@ function Login({ setLogbut }) {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Password"
+                            id="pass"
                         />
                         <br />
 
@@ -104,7 +116,7 @@ function Login({ setLogbut }) {
                         }} onClick={handleGithubLogin}></button><br />
 
                         <button type="submit" className="submit">Next</button><br />
-                        <a onClick={() => { setLogbut(false) }} className="GoBack">Go Back</a>
+                        <p onClick={() => {setCreate(!create)}} className="switch">{create? "Have a Account" : "Create Account"}</p>
                     </form>
                 </div>
             </div>

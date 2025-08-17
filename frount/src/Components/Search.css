@@ -21,3 +21,15 @@
     display: flex;
     gap: 20px;
 }
+
+@media (max-width: 768px) {
+    .searchRes{
+        width: 95vw;
+    }
+
+    .searchRes > .songs,
+    .searchRes > .collections,
+    .searchRes > .artists {
+        margin-left: 10px;
+    }
+}

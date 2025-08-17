@@ -22,3 +22,19 @@
 .collection > h2 {
     font-size: 20px;
 }
+
+@media (max-width: 768px) {
+    .collection {
+        height: 200px;
+        width: 156px;
+    }
+
+    .collection > div {
+        height: 140px;
+        width: 134px;
+    }
+
+    .collection > h2 {
+        font-size: 17px;
+    }
+}

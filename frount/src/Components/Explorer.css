@@ -103,3 +103,77 @@
 .EcontrolA > .right > img {
     transform: rotate(90deg);
 }
+
+@media (max-width: 768px) {
+    .EcontrolC {
+        left: 290px;
+        top: 16px;
+        display: none;
+        /* border: 1px solid red; */
+    }
+
+    .EcollForYou {
+        width: 100vw;
+        /* border: 2px solid red; */
+        position: relative;
+        bottom: 5px;
+    }
+
+    .EcollForYou > h2 {
+        margin-left: 30px;
+    }
+
+    .EcollectionsBlock {        
+        gap: 5px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .EcollectionsBlock::-webkit-scrollbar{
+        display: none;
+    }
+
+    .EcontrolC > .left , .EcontrolC > .right {
+        height: 35px;
+        width: 35px;
+    }
+
+    .EcontrolA {
+        left: 275px;
+        top: 16px;
+        width: 90px;
+        /* border: 1px solid red; */
+        display: none;
+    }
+
+    .EArtist {
+        width: 100vw;
+        /* border: 2px solid red; */
+        position: relative;
+        bottom: 40px;
+    }
+    
+    .EArtist > h2 {
+        margin-left: 30px;
+    }
+    
+    .EartistBlock {
+        /* border: 1px solid red; */
+        gap: 0px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .EartistBlock::-webkit-scrollbar{
+        display: none;
+    }
+
+    .EcontrolA > .left , .controlA > .right {
+        height: 35px;
+        width: 35px;
+    }
+}

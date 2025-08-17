@@ -40,11 +40,11 @@ function Setings({ user, picUrl, setLogbut }) {
         {picUrl ? (
           <img
             src={user != null ? picUrl : userim}
-            alt="Profile"
-            style={{ width: "80px", height: "80px", borderRadius: "50%" }}
+            alt="Con't load Profile"
+            className='profile'
           />
         ) : (
-          <div style={{ width: "80px", height: "80px", borderRadius: "50%" }}></div>
+          <div className='noProfile' ></div>
         )}
         <p>{user != null ? user?.name : "No user"}</p>
         <button onClick={() => setLogbut(true)}>Switch account</button>

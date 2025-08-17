@@ -61,3 +61,15 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
+.playButton {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  left: 580px;
+  bottom: 53px;
+  background-color: white;
+  border: none;
+  z-index: 5;
+}
+

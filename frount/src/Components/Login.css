@@ -12,10 +12,16 @@
     box-shadow: 0px 0px 5px 0.01px;
 }
 
+.Login {
+    /* border: 2px solid red; */
+    background: none;
+    height: 100px;
+}
+
 .name , .pass {
     height: 40px;
     width: 280px;
-    border: 2px solid rgb(77, 77, 77);
+    border: 2px solid rgba(77, 77, 77, 0.438);
     border-radius: 30px;
     margin: 10px;
     position: relative;
@@ -58,6 +64,7 @@ form > p {
     color: white;
     font-size: 20px;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .GoBack {
@@ -111,6 +118,7 @@ body {
     height: 550px;
     right: 0px;
     bottom: 0px;
+    display:none;
 }
 
 .man {
@@ -122,6 +130,149 @@ body {
     animation: blink-shadow 3s infinite;
 }
 
+.res {
+    color: red;
+    font-size: 12px;
+    position: relative;
+    bottom: 12px;
+}
+
+@keyframes blink-shadow {
+    0%, 100% {
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+}
+50% {
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+  }
+}
+
+.switchAccount {
+    position: relative;
+    top: 5px;
+}
+
+
+@media (max-width: 768px) {
+.LoginDesk {
+    width: 80vw;
+    height: 45vh;
+    border-radius: 30px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    backdrop-filter: blur(8px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(71, 69, 69, 0.507);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background: none;
+    /* border: 2px solid red; */
+    margin-top: 30px;
+}
+
+
+.name , .pass {
+    height: 40px;
+    width: 280px;
+}
+
+.LoginDesk > ::placeholder {
+    font-weight: 200;
+}
+
+form > p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px;
+    color: white;
+}
+.google, .git {
+    height: 45px;
+    width: 45px;
+    border: 2px solid rgb(209, 233, 255);
+    border-radius: 30px;
+    margin: 10px;
+    padding: 2px;
+    align-items: center;
+}
+
+.submit {
+    height: 45px;
+    width: 250px;
+    background-color: rgb(80, 135, 238);
+    border-radius: 30px;
+    border: 1px solid rgb(136, 136, 136);
+    margin: 10px;
+    padding: 2px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.GoBackTO {
+    font-size: small;
+    color: white;
+}
+
+.GoBack:hover {
+    cursor: pointer;
+}
+
+.LoginDesk > button:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 0.01px;
+}
+
+.wel {
+    height: 80px;
+    width: 400px;
+    display: flex;
+    position: relative;
+    top: 40px;
+    left: 40px;
+    /* border: 2px solid  red; */
+}
+
+.logo {
+    height: 90px;
+}
+.wel > h2 {
+    color: rgba(32, 31, 31, 0.9);
+    font-weight: bolder;
+    font-size: 25px;
+    position: relative;
+    bottom: 5px;
+    width: 400px;
+}
+
+.wel > p {
+    width: 300px;
+    font-size: 18px;
+    position: absolute;
+    top: 35px;
+    left: 92px;
+}
+
+.back {
+    position: absolute;
+    height: 60vh;
+    right: 0px;
+    bottom: 0px;
+    display: none;
+}
+
+.man {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -0%);
+    transition: none;
+    animation: none;
+    z-index: -1;
+    filter: drop-shadow(0 0 0 transparent) blur(0.1px);
+}
+
+
 @keyframes blink-shadow {
   0%, 100% {
     filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
@@ -129,4 +280,5 @@ body {
   50% {
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
   }
+}
 }

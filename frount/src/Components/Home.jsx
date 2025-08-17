@@ -13,6 +13,8 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
     let [dailyImg, setDailyImg] = useState("");
     let [newImg, setNewImg] = useState("");
 
+    const baseURL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         try{
             setDailyImg(dailyBeat[0].id);
@@ -58,23 +60,27 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
     };
 
     const scrollLeftC = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
-        scrollRefC.current.scrollBy({left: -192, behavior: 'smooth'});
+        scrollRefC.current.scrollBy({left: -sc, behavior: 'smooth'});
         setTimeout(() => {
             setDisable(false);
         }, 500);
     };
 
     const scrollRightC = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
         const container = scrollRefC.current;
         const maxScroll = container.scrollWidth - container.clientWidth;
-        const newScroll = container.scrollLeft + 192;
+        const newScroll = container.scrollLeft + sc;
 
-        if (newScroll >= maxScroll) {
+        if (newScroll-100 > maxScroll) {
             container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-            container.scrollBy({ left: 192, behavior: 'smooth' });
+            container.scrollBy({ left: sc, behavior: 'smooth' });
         }
         setTimeout(() => {
             setDisable(false);
@@ -82,23 +88,27 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
     };
 
     const scrollLeftA = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
-        scrollRefA.current.scrollBy({left: -200, behavior: 'smooth'});
+        scrollRefA.current.scrollBy({left: -sc, behavior: 'smooth'});
         setTimeout(() => {
             setDisable(false);
         }, 500);
     };
 
     const scrollRightA = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
         const container = scrollRefA.current;
         const maxScroll = container.scrollWidth - container.clientWidth;
-        const newScroll = container.scrollLeft + 185;
+        const newScroll = container.scrollLeft + sc;
         
-        if (newScroll >= maxScroll) {
+        if (newScroll-100 >= maxScroll) {
             container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-            container.scrollBy({ left: 200, behavior: 'smooth' });
+            container.scrollBy({ left: sc, behavior: 'smooth' });
         }
         setTimeout(() => {
             setDisable(false);
@@ -131,7 +141,7 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
             <button className='dailyBeat' onClick={handleDailyBeat}>
                 <p>Daily Beat</p>
                 <div style={{
-                    backgroundImage: `url(http://localhost:7000/song/get/image/${dailyImg})`,
+                    backgroundImage: `url(${baseURL}/song/get/image/${dailyImg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}></div>
@@ -139,12 +149,12 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
             <button className='ourNew' onClick={handleNewCollection}>
                 <p>Try our new Collection</p>
                 <div style={{
-                    backgroundImage: `url(http://localhost:7000/song/get/image/${newImg})`,
+                    backgroundImage: `url(${baseURL}/song/get/image/${newImg})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}></div>
             </button>
-        </div><br/><br/>
+        </div>
 
 
         <div className='quickPick'>
@@ -169,7 +179,7 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
             ))
         }
         </div>
-        </div><br/><br/>
+        </div>
 
         <div className='collForYou'>
             <div className='controlC'>
@@ -177,14 +187,14 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
                 <button className='right' onClick={scrollRightC} disabled={disable}><img src={arrow}/></button>
             </div>
             <h2>Collections For you</h2>
-            <div className='collectionsBlock' ref={scrollRefC}>
+            <div className='collectionsBlock' ref={scrollRefC}><div style={{width:"30px"}}/>
             {
                     collections.map((item) => (
                         <Collection key={item.id} collection={item} setCollView={setCollView}/>
                     ))
             }
             </div>
-        </div><br /><br />
+        </div>
 
         <div className='Artist'>
             <div className='controlA'>
@@ -192,17 +202,17 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
                 <button className='right' onClick={scrollRightA} disabled={disable}><img src={arrow}/></button>
             </div>
             <h2>Artists</h2>
-            <div className='artistBlock' ref={scrollRefA}>
+            <div className='artistBlock' ref={scrollRefA}><div style={{width:"30px"}}/>
             {
                     artists.map((item) => (
                         <Artist key={item.id} setCollView={setCollView} artist={item}/>
                     ))
             }
             </div>
+        </div>
             <div className='thank'>
                 <p>Thank you for visiting — this project is part of my developer portfolio.</p>
             </div>
-        </div>
         </>
     )
 }

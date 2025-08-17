@@ -74,7 +74,7 @@ export default function Search({searchData,  setSong, setPlay, setPlayAll, setSo
                     </div>
                 </div> </>
             : <><p style={{textAlign:"center"}}>No results</p></>
-            }
+            }<br /><br /><br /><br /><br /><br />
             </div>
         </>
     )

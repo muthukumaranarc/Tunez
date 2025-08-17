@@ -3,8 +3,14 @@ import './Song.css';
 
 function Song({data ,setSong, songs, setPlay, setPlayAll, setSongs}) {
 
+    const baseURL = import.meta.env.VITE_API_URL;
+
+    let dec = 35;
+
+    if(window.innerWidth < 768) dec = 30
+
     let name = (data.name.length < 35)? data.name : data.name.slice(0, 35) + "...";
-    let artist = (data.artist.length < 35)? data.artist : (data.artist).slice(0, 35) + "...";
+    let artist = (data.artist.length < dec)? data.artist : (data.artist).slice(0,  dec) + "...";
     
     return (
         <>
@@ -18,7 +24,7 @@ function Song({data ,setSong, songs, setPlay, setPlayAll, setSongs}) {
             }, 100);
         }}>
             <div style={{
-                backgroundImage: `url(http://localhost:7000/song/get/image/${data.id})`,
+                backgroundImage: `url(${baseURL}/song/get/image/${data.id})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'}}>
             </div>

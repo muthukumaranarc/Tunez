@@ -4,7 +4,9 @@ import './Collection.css';
 function Collection({collection, setCollView}) {
     const baseURL = import.meta.env.VITE_API_URL;
 
-    let name = (collection?.name?.length < 15)? collection.name : collection.name?.slice(0, 14) + "...";
+    let red = 15;
+
+    let name = (collection?.name?.length < red)? collection.name : collection.name?.slice(0, red) + "..";
 
     const handleClick = () => {
     const songs = collection.songsId; 
@@ -26,7 +28,7 @@ function Collection({collection, setCollView}) {
     return (
         <button className='collection' onClick={handleClick}> 
             <div style={{
-                backgroundImage: `url(http://localhost:7000/collection/get/image/${collection.id})`,
+                backgroundImage: `url(${baseURL}/collection/get/image/${collection.id})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'}}>
             </div>

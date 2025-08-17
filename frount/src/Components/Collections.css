@@ -104,3 +104,9 @@
   background: #2b6ef6;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .Collections {
+    margin-top: 50px;
+  }
+}

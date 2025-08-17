@@ -24,3 +24,36 @@
     position: relative;
     bottom: 250px;
 }
+
+@media (max-width: 768px) {
+    .collBox {
+        background: none;
+        height: 200px;
+        width: 150px;
+        margin-top: 0px;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 0px;
+        border: 2px solid rgba(0, 0, 0, 0.438);
+        border-radius: 10px;
+    }
+
+    .collBox > div {
+        height: 55px;
+        width: 95%;
+        border-radius: 10px;
+        border: 2px solid rgba(0, 0, 0, 0.438);
+        margin: 5px;
+    }
+
+    .collBox > h2 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .delete {
+        position: relative;
+        bottom: 250px;
+    }
+
+}

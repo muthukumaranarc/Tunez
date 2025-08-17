@@ -5,7 +5,7 @@
     flex-direction: column;
     border: none;
     background-color: rgb(255, 255, 255);
-    text-align: center;
+    align-items: center;
 }
 
 .artist > div {
@@ -21,4 +21,20 @@
 
 .artist > h2 {
     font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .artist {
+        height: 200px;
+        width: 156px;
+    }
+
+    .artist > div {
+        height: 140px;
+        width: 140px;
+    }
+
+    .artist > h2 {
+        font-size: 17px;
+    }
 }

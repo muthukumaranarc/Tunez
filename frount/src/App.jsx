@@ -10,7 +10,7 @@ function App() {
     const showOfflineAlert = () => {
       alert("🚫 No Internet Connection");
     };
-
+    
     const showSlowNetworkAlert = () => {
       if (navigator.connection && navigator.connection.downlink < 0.4) {
         alert("⚠️ Slow Internet Connection");
@@ -19,8 +19,6 @@ function App() {
 
     window.addEventListener("offline", showOfflineAlert);
     window.addEventListener("online", showSlowNetworkAlert);
-
-    // Optional: Check speed at start
     showSlowNetworkAlert();
 
     return () => {

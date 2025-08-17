@@ -2,7 +2,7 @@ import './Artist.css'
 
 function Artist({setCollView, artist}) {
     const baseURL = import.meta.env.VITE_API_URL;
-    let name = (artist.artist.length < 13)? artist.artist : artist.artist.slice(0, 13) + "...";
+    let name = (artist.artist.length < 14)? artist.artist : artist.artist.slice(0, 14) + "..";
 
     const handleClick = () => {
         const songs = artist.songsId; 
@@ -30,7 +30,7 @@ function Artist({setCollView, artist}) {
     return (
         <button className='artist' onClick={handleClick}>
             <div style={{
-                backgroundImage: `url(http://localhost:7000/artist/get/image/${artist.id})`,
+                backgroundImage: `url(${baseURL}/artist/get/image/${artist.id})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'}}>
             </div>

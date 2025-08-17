@@ -55,7 +55,7 @@ function PrivateCollections({ data, setCollView }) {
                 onContextMenu={handleRightClick}
             >
                 <div style={{
-                    backgroundImage: `url(http://localhost:7000/song/get/image/${firstSong})`,
+                    backgroundImage: `url(${baseURL}/song/get/image/${firstSong})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: '120px'

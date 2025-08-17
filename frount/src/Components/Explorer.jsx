@@ -32,23 +32,27 @@ function Explore({collections, artists, setCollView}) {
 
         
     const scrollLeftC = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
-        scrollRefC.current.scrollBy({left: -192, behavior: 'smooth'});
+        scrollRefC.current.scrollBy({left: -sc, behavior: 'smooth'});
         setTimeout(() => {
             setDisable(false);
         }, 500);
     };
 
     const scrollRightC = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
         const container = scrollRefC.current;
         const maxScroll = container.scrollWidth - container.clientWidth;
-        const newScroll = container.scrollLeft + 192;
+        const newScroll = container.scrollLeft + sc;
 
-        if (newScroll >= maxScroll) {
+        if (newScroll-100 >= maxScroll) {
             container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-            container.scrollBy({ left: 192, behavior: 'smooth' });
+            container.scrollBy({ left: sc, behavior: 'smooth' });
         }
         setTimeout(() => {
             setDisable(false);
@@ -56,23 +60,27 @@ function Explore({collections, artists, setCollView}) {
     };
 
     const scrollLeftA = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
-        scrollRefA.current.scrollBy({left: -200, behavior: 'smooth'});
+        scrollRefA.current.scrollBy({left: -sc, behavior: 'smooth'});
         setTimeout(() => {
             setDisable(false);
         }, 500);
     };
 
     const scrollRightA = () => {
+        let sc = 192;
+        if(window.innerWidth <= 768) sc = 161;
         setDisable(true);
         const container = scrollRefA.current;
         const maxScroll = container.scrollWidth - container.clientWidth;
-        const newScroll = container.scrollLeft + 185;
+        const newScroll = container.scrollLeft + sc;
         
-        if (newScroll >= maxScroll) {
+        if (newScroll-100 >= maxScroll) {
             container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-            container.scrollBy({ left: 200, behavior: 'smooth' });
+            container.scrollBy({ left: sc, behavior: 'smooth' });
         }
         setTimeout(() => {
             setDisable(false);
@@ -80,14 +88,14 @@ function Explore({collections, artists, setCollView}) {
     };
 
     return (
-        <><br /><br />
+        <><br />
         <div className='EcollForYou'>
             <div className='EcontrolC'>
                 <button className='left' onClick={scrollLeftC} disabled={disable}><img src={arrow} /></button>
                 <button className='right' onClick={scrollRightC} disabled={disable}><img src={arrow}/></button>
             </div>
             <h2>Top Search Collections</h2>
-            <div className='EcollectionsBlock' ref={scrollRefC}>
+            <div className='EcollectionsBlock' ref={scrollRefC}><div style={{width:"30px"}}/>
             {
                     coll.map((item) => (
                         <Collection key={item.id} collection={item} setCollView={setCollView}/>
@@ -102,7 +110,7 @@ function Explore({collections, artists, setCollView}) {
                 <button className='right' onClick={scrollRightA} disabled={disable}><img src={arrow}/></button>
             </div>
             <h2>Popular Artists</h2>
-            <div className='EartistBlock' ref={scrollRefA}>
+            <div className='EartistBlock' ref={scrollRefA}><div style={{width:"30px"}}/>
             {
                     art.map((item) => (
                         <Artist key={item.id} setCollView={setCollView} artist={item}/>

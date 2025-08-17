@@ -4,7 +4,7 @@ import logo from '../assets/Only_Logo_NoBackground.png';
 import search from '../assets/search.png';
 import { useEffect, useState } from 'react';
 
-function Head({ page, menuState, setMenuState, setLogbut, user, picUrl, setSearchStatus, searchStatus, setSearchData }) {
+function Head({ page, setPage, menuState, setMenuState, setLogbut, user, picUrl, setSearchStatus, searchStatus, setSearchData }) {
     const [picture, setPicture] = useState("");
     const [searchValue, setSearchValue] = useState("");
 
@@ -59,11 +59,7 @@ function Head({ page, menuState, setMenuState, setLogbut, user, picUrl, setSearc
                             backgroundImage: `url(${picture})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                            height: "20px",
-                            width: "20px",
-                            padding: "15px",
-                            borderRadius: "50%"
-                        }}>
+                        }} className='userPro' onClick={() =>{setPage("Setings")}}>
                         </button>
                     </div>
             }

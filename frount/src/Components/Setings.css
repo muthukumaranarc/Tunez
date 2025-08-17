@@ -6,7 +6,7 @@
 .userSlid {
     height: 150px;
     width: 85%;
-    margin-top: 40px;
+    margin-top: 0px;
     display: flex;
     align-items: center;
     padding-left: 40px;
@@ -21,8 +21,8 @@
 }
 
 .userSlid > button {
-    position: absolute;
-    right: 15vw;
+    position: relative;
+    left: 40vw;
     font-size: 18px;
     border: none;
     background: none;
@@ -30,7 +30,6 @@
 }
 
 .deleteUser, .logOut {
-    width: 30%;
     margin-top: 10px;
     font-size: 18px;
     border: none;
@@ -58,5 +57,80 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: 8vh;
+    top: 60vh;
+}
+
+.profile {
+    width:80px; 
+    height: 80px; 
+    border-radius: 50%;
+}
+
+.noProfile {
+    width:80px; 
+    height: 80px; 
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .userSlid {
+        margin-top: 40px;
+        height: 100px;
+        width: 83vw;
+    }
+
+    .userSlid > p {
+        margin-left: 20px;    
+        font-size: 18px;
+        font-weight: bold;
+        position: relative;
+        right: 20px;
+    }
+
+    .userSlid > button {
+        position: relative;
+        left: 10%;
+        font-size: 14px;
+        border: none;
+        background: none;
+        color: rgb(23, 109, 23);
+    }
+
+    .deleteUser, .logOut {
+        margin-top: 10px;
+        font-size: 18px;
+        border: none;
+        background: none;
+        text-align: left;
+        color: red;
+        padding-left: 20px;
+    }
+    
+    .deleteUser {
+        margin-top: 30px;
+    }
+
+    .viewDev {
+        width: 240px;
+        height: 50px;
+        position: absolute;
+        top: 38vh;
+    }
+
+    .profile {
+        width:60px; 
+        height: 60px; 
+        border-radius: 50%;
+        position: relative;
+        right: 20px;
+    }
+
+    .noProfile {
+        width:60px; 
+        height: 60px; 
+        border-radius: 50%;
+        position: relative;
+        right: 20px;
+    }
+
 }

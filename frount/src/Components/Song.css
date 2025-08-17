@@ -41,3 +41,11 @@
     height: 60px;
     width: 60px;
 }
+
+@media (max-width: 768px)  {
+    .song {
+        margin-left: 30px;
+        margin-right: 0px;
+        width: 350px;
+    }
+}

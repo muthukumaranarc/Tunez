@@ -1,11 +1,8 @@
 import Content from './Content';
 import Head from './Head';
 import Menu from './Menu';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 import './Land.css';
-
-import { useState } from 'react';
 import Login from './Login';
 
 function Land() {
@@ -22,6 +19,35 @@ function Land() {
     const [searchData, setSearchData] = useState("");
 
     useEffect(() => {
+        if(window.innerWidth <= 768) {
+            setMenuState(false);
+        }
+    },[]);
+
+    // 🔙 Force browser back button → Home
+    useEffect(() => {
+        const handlePopState = () => {
+            setPage("Home"); 
+            if(window.innerWidth <= 768) setMenuState(false); else setMenuState(true);
+            setCollView(null); 
+            setSearchStatus(false);
+            setLogbut(false);
+
+            // Prevent leaving the site by pushing a dummy state again
+            window.history.pushState(null, "", window.location.href);
+        };
+
+        // Push initial state so back button triggers popstate
+        window.history.pushState(null, "", window.location.href);
+        window.addEventListener("popstate", handlePopState);
+
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, []);
+
+    // Fetch logged-in user
+    useEffect(() => {
         fetch(`${baseURL}/user/get/user` , {
             method: 'GET',
             credentials: 'include',
@@ -34,24 +60,25 @@ function Land() {
             setUser({name: data.username})
         })
         .catch(() => {})
-    }, [baseURL])
+    }, [baseURL]);
 
+    // Fetch profile pic
     useEffect(() => {
         fetch(`${baseURL}/user/profile-pic`, {
-          credentials: 'include' // Important so cookies/session tokens are sent
+          credentials: 'include' 
         })
-          .then(res => res.text()) // since backend returns plain string
+          .then(res => res.text()) 
           .then(url => setPicUrl(url.trim().replace(/^"|"$/g, '')))
-    
           .catch(err => console.error(err));
       }, [baseURL]);
+
     return (
         <>
         {
             (logbut) ? <Login setLogbut={setLogbut}/> : <>
             <Head 
-                menuState = {menuState} 
-                setMenuState = {setMenuState} 
+                menuState={menuState} 
+                setMenuState={setMenuState} 
                 setLogbut={setLogbut} 
                 user={user} 
                 picUrl={picUrl}
@@ -59,15 +86,25 @@ function Land() {
                 searchStatus={searchStatus}
                 setSearchData={setSearchData}
                 page={page}
+                setPage={setPage}
             />
             <div style={{height:"49px"}}></div>
             {
-                (menuState) ? <Menu page={page} setPage={setPage} setCollView={setCollView} setGet={setGet}  setSearchStatus={setSearchStatus}/> : <div></div> 
+                (menuState) ? 
+                  <Menu 
+                    setMenuState={setMenuState} 
+                    page={page} 
+                    setPage={setPage} 
+                    setCollView={setCollView} 
+                    setGet={setGet}  
+                    setSearchStatus={setSearchStatus}
+                  /> 
+                : <div></div> 
             }
             <div style={{display:'flex'}}>
-                <div style={{width: menuState ? '260px' : '0px'}}></div> 
+                <div style={{width: (menuState && window.innerWidth >= 768) ? '260px' : '0px'}}></div> 
                 <Content 
-                    menuState = {menuState} 
+                    menuState={menuState} 
                     page={page} 
                     collView={collView}
                     setCollView={setCollView} 
@@ -85,7 +122,7 @@ function Land() {
         }
         
         </>
-    )
+    );
 }
 
 export default Land;
