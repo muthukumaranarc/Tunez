@@ -25,7 +25,7 @@ public class AuthConfiguration {
     private JwtFilter jwtFilter;
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private MyUserDetailsService myUserDetailsService; // ✅ use MyUserDetailsService
 
     private final OAuth2SuccessHandler successHandler;
 
@@ -36,26 +36,28 @@ public class AuthConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(Customizer.withDefaults()) // ✅ Enable CORS support in Spring Security
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/error", "/oauth2/**" ,"/user/create", "/song/**", "/collection/**", "/artist/**", "/search/**").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
-                .oauth2Login(oauth -> oauth
-                        .successHandler(successHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                        .requestMatchers(
+                                "/", "/login", "/error", "/oauth2/**",
+                                "/user/create", "/user/loginUser",
+                                "/song/**", "/collection/**",
+                                "/artist/**", "/search/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth -> oauth.successHandler(successHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
-    @Deprecated
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
-        provider.setUserDetailsService(myUserDetailsService);
+        provider.setUserDetailsService(myUserDetailsService); // ✅ correctly wired
         return provider;
     }
 
@@ -63,5 +65,4 @@ public class AuthConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

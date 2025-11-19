@@ -40,7 +40,6 @@ function Setings({ user, picUrl, setLogbut }) {
         {picUrl ? (
           <img
             src={user != null ? picUrl : userim}
-            alt="Con't load Profile"
             className='profile'
           />
         ) : (

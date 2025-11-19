@@ -58,15 +58,16 @@ public class OAuth2SuccessHandler implements org.springframework.security.web.au
         // Create HttpOnly cookie
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(false) // true for HTTPS
+                .secure(true) // true for HTTPS
                 .path("/")
                 .maxAge(Duration.ofDays(365))
-                .sameSite("Lax")
+                .sameSite("None")
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         // Redirect back to frontend
-        response.sendRedirect("http://localhost:5173");
+//        response.sendRedirect("https://tunez-online.web.app/oauth2/redirect");
+        response.sendRedirect("http://localhost:5173/oauth2/redirect");
     }
 }

@@ -43,8 +43,8 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public Boolean deleteUser() {
-        return service.deleteUser();
+    public Boolean deleteUser(HttpServletResponse response) {
+        return service.deleteUser(response);
     }
 
     @DeleteMapping("/delete/username/{username}")

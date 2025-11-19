@@ -13,9 +13,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.User;
+import java.util.Collections;
 
 import java.time.Duration;
 import java.util.List;
@@ -124,12 +128,12 @@ public class UserService {
         return jwtService.generateToken(email);
     }
 
-    public boolean deleteUser() {
+    public boolean deleteUser(HttpServletResponse response) {
         try{
             String username = jwtService.getCurrentUsername(request);
             data.deleteById(username);
             privateCollectionService.deleteCollectionByUserName(username);
-            return true;
+            return deleteCookie(response);
         }
         catch (Exception e) {
             return false;
@@ -164,27 +168,30 @@ public class UserService {
     public ResponseCookie giveCookie(String token, HttpServletResponse request) {
         return ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true) //https
                 .path("/")
                 .maxAge(Duration.ofDays(365))
-                .sameSite("Lax")
+                .sameSite("None")  //This line important for (security(true))
                 .build();
     }
 
     public boolean deleteCookie(HttpServletResponse response) {
         try {
-            Cookie cookie = new Cookie("jwt", null);
-            cookie.setPath("/");
-            cookie.setHttpOnly(true);
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
+            ResponseCookie cookie = ResponseCookie.from("jwt", "")
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .maxAge(0)
+                    .sameSite("None")
+                    .build();
+
+            response.addHeader("Set-Cookie", cookie.toString());
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
-
     }
+
 
     public String getProfilePictureUrl() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -210,5 +217,19 @@ public class UserService {
             return false;
         }
 
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users user = data.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found: " + username);
+        }
+
+        // Spring Security User
+        return new User(
+                user.getUsername(),
+                user.getPassword() != null ? user.getPassword() : "", // empty password for OAuth users
+                Collections.emptyList() // roles/authorities (empty for now)
+        );
     }
 }

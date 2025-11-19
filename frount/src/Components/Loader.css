@@ -1,11 +1,11 @@
 .loaderMain {
-    height:102vh;
+    height:104.5vh;
     width:102Vw;
     display:flex;
     justify-content:center;
     align-items:center;
     position:fixed;
-    top:-1vh;
+    top: -0.1vh;
     left:-1vw;
     z-index:10;
     background:white;

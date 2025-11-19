@@ -17,7 +17,7 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
 
     useEffect(() => {
         try{
-            setDailyImg(dailyBeat[0].id);
+            setDailyImg(dailyBeat[1]);
         }
         // eslint-disable-next-line no-unused-vars
         catch(exception) {
@@ -27,13 +27,16 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
 
     useEffect(() => {
         try{
-            setNewImg(newCollection[0].id);
+            let temp = 1;
+            let data = dailyImg
+            while (data.image == newCollection[temp].image) temp = temp + 1
+            setNewImg(newCollection[temp]);
         }
         // eslint-disable-next-line no-unused-vars
         catch(exception) {
             setNewImg("")
         }
-    }, [newCollection])
+    }, [dailyImg, newCollection])
 
     const scrollLeftS = () => {
         setDisable(true);
@@ -141,7 +144,7 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
             <button className='dailyBeat' onClick={handleDailyBeat}>
                 <p>Daily Beat</p>
                 <div style={{
-                    backgroundImage: `url(${baseURL}/song/get/image/${dailyImg})`,
+                    backgroundImage: `url(${baseURL}/song/get/image/${dailyImg?.id})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}></div>
@@ -149,7 +152,7 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
             <button className='ourNew' onClick={handleNewCollection}>
                 <p>Try our new Collection</p>
                 <div style={{
-                    backgroundImage: `url(${baseURL}/song/get/image/${newImg})`,
+                    backgroundImage: `url(${baseURL}/song/get/image/${newImg?.id})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center'
                 }}></div>

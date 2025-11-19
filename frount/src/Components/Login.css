@@ -155,7 +155,7 @@ body {
 @media (max-width: 768px) {
 .LoginDesk {
     width: 80vw;
-    height: 45vh;
+    height: 400px;
     border-radius: 30px;
     position: fixed;
     top: 40%;

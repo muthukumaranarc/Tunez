@@ -1,4 +1,5 @@
 import { useState } from "react";
+import zxcvbn from "zxcvbn";   // <-- install this package
 import google from '../assets/google.png';
 import gitHub from '../assets/GitHub.png';
 import './Login.css';
@@ -6,7 +7,7 @@ import logo from '../assets/Only_Logo_NoBackground.png';
 import back from '../assets/background.png';
 import man from '../assets/SingingMan.png';
 
-function Login( ) {
+function Login() {
     const baseURL = import.meta.env.VITE_API_URL;
     let [create, setCreate] = useState(true);
 
@@ -16,52 +17,66 @@ function Login( ) {
     });
 
     let [error, setError] = useState("");
+    let [passwordScore, setPasswordScore] = useState(null);
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: value
         });
+
+        if (name === "password") {
+            const result = zxcvbn(value);
+            setPasswordScore(result.score); // 0–4
+        }
+
         setError(""); // Clear error when user types
     };
 
     const handleSubmit = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (formData.username && formData.username === formData.password) {
-        setError("Username and password cannot be the same");
-        return; // Stop form submission
-    }
-
-    fetch(`${baseURL}/user/${create ? 'create' : 'loginUser'}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include",
-        body: JSON.stringify(formData)
-    })
-    .then(async (res) => {
-        const responseText = await res.text();
-        if(responseText === "Success") window.location.reload();
-        else {
-            alert(responseText);
-            document.getElementById("user").innerText = ""
-            document.getElementById("pass").innerText = ""
+        // Prevent weak password submit
+        if (create && passwordScore !== null && passwordScore < 2) {
+            alert("Weak password! Please set a stronger password.");
+            return;
         }
-    })
-    .catch((err) => {
-        console.error("Network error:", err);
-    });
-};
 
+        if (formData.username && formData.username === formData.password) {
+            setError("Username and password cannot be the same");
+            return;
+        }
 
+        fetch(`${baseURL}/user/${create ? 'create' : 'loginUser'}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(formData)
+        })
+        .then(async (res) => {
+            const responseText = await res.text();
+            if (responseText === "Success") {
+                window.location.reload();
+            } else {
+                alert(responseText);  // <-- only for basic auth
+                setFormData({ username: "", password: "" });
+            }
+        })
+        .catch((err) => {
+            console.error("Network error:", err);
+        });
+    };
 
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = (e) => {
+        e.preventDefault(); // prevent form submit
         window.location.href = `${baseURL}/oauth2/authorization/google`;
     };
 
-    const handleGithubLogin = () => {
+    const handleGithubLogin = (e) => {
+        e.preventDefault(); // prevent form submit
         window.location.href = `${baseURL}/oauth2/authorization/github`;
     };
 
@@ -75,8 +90,8 @@ function Login( ) {
             </div>
             <div className="Login">
                 <div className='LoginDesk'>
-                    <h2>{create? "Create Account" : "Login"}</h2>
-                    <form onSubmit={handleSubmit} onKeyDown={(e) => {if (e.key === "Enter") e.preventDefault();}}>
+                    <h2>{create ? "Create Account" : "Login"}</h2>
+                    <form onSubmit={handleSubmit} onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}>
                         <input
                             type="text"
                             name="username"
@@ -84,6 +99,7 @@ function Login( ) {
                             value={formData.username}
                             onChange={handleChange}
                             placeholder="Username"
+                            autoComplete="new-password"
                             id="user"
                         />
                         <br />
@@ -95,7 +111,13 @@ function Login( ) {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Password"
+                            autoComplete="new-password"
                             id="pass"
+                            style={{
+                                border: passwordScore !== null && passwordScore < 2
+                                    ? "2px solid red"
+                                    : "1px solid black"
+                            }}
                         />
                         <br />
 
@@ -104,19 +126,29 @@ function Login( ) {
 
                         <p>or</p>
 
-                        <button className="google" style={{
-                            backgroundImage: `url(${google})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                        }} onClick={handleGoogleLogin}></button>
-                        <button className="google" style={{
-                            backgroundImage: `url(${gitHub})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                        }} onClick={handleGithubLogin}></button><br />
+                        <button
+                            type="button"
+                            className="google"
+                            style={{
+                                backgroundImage: `url(${google})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                            }}
+                            onClick={handleGoogleLogin}
+                        ></button>
+                        <button
+                            type="button"
+                            className="google"
+                            style={{
+                                backgroundImage: `url(${gitHub})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                            }}
+                            onClick={handleGithubLogin}
+                        ></button><br />
 
                         <button type="submit" className="submit">Next</button><br />
-                        <p onClick={() => {setCreate(!create)}} className="switch">{create? "Have a Account" : "Create Account"}</p>
+                        <p onClick={() => { setCreate(!create) }} className="switch">{create ? "Have an Account" : "Create Account"}</p>
                     </form>
                 </div>
             </div>

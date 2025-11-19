@@ -3,6 +3,8 @@ import './PlaySong.css';
 import { useEffect, useRef, useState } from "react";
 import prevImg from '../assets/Previous.png';
 import nextImg from '../assets/next.png';
+import playIcon from "../assets/play.png";
+import pauseIcon from "../assets/pause.png";
 
 function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }) {
 
@@ -120,14 +122,14 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
         {
           (!isPlaying) ?
           <button onClick={handlePlayPause} style={{
-            backgroundImage:`url(src/assets/play.png)`,
+            backgroundImage:`url(${playIcon})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }} className="playButton">
           </button> 
         : 
           <button onClick={handlePlayPause} style={{
-            backgroundImage:`url(src/assets/pause.png)`,
+            backgroundImage:`url(${pauseIcon})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }} className="playButton">

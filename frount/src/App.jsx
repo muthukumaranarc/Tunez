@@ -31,7 +31,7 @@ function App() {
 
   setTimeout(() => {
     setLoad(false);
-  }, 2000);
+  }, 3000);
 
      useEffect(() => {
     const handleWheel = (e) => {
