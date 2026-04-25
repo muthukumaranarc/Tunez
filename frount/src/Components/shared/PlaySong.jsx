@@ -1,14 +1,15 @@
 import AudioSlider from './AudioSlider';
-import './PlaySong.css';
+import '../../styles/PlaySong.css';
 import { useEffect, useRef, useState } from "react";
-import prevImg from '../assets/Previous.png';
-import nextImg from '../assets/next.png';
-import playIcon from "../assets/play.png";
-import pauseIcon from "../assets/pause.png";
+import prevImg from '../../assets/Previous.png';
+import nextImg from '../../assets/next.png';
+import playIcon from "../../assets/play.png";
+import pauseIcon from "../../assets/pause.png";
+import API_BASE_URL from '../../api/apiConfig';
 
 function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }) {
 
-  const baseURL = import.meta.env.VITE_API_URL;
+  const baseURL = API_BASE_URL;
 
   const [songOver, setSongOver] = useState(false);
   const indexRef = useRef(0);
@@ -21,7 +22,6 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
     setPlaying(song);
   }, [setPlaying, song])
 
-  // Update playing song by index
   const updatePlayingSong = (newIndex) => {
     if (newIndex >= 0 && newIndex < songs.length) {
       indexRef.current = newIndex;
@@ -31,15 +31,13 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
     }
   };
 
-  // Initial setup when playAll is true
   useEffect(() => {
     if (playAll && songs.length > 0) {
-      updatePlayingSong(0); // Start from first song
+      updatePlayingSong(0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playAll, songs]);
 
-  // Handle when song finishes
   useEffect(() => {
     if (songOver) {
       const nextIndex = indexRef.current + 1;
@@ -51,13 +49,10 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songOver, songs]);
 
-  // Auto-play song when changed
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.load();
-      audioRef.current.play().catch(() => {
-        // Autoplay might be blocked; ignore
-      });
+      audioRef.current.play().catch(() => {});
     }
     for (let i = 0; i < songs.length; i++) {
       if (playing.id === songs[i].id) {
@@ -65,7 +60,8 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
         break;
       }
     }
-    setHidePrev(!(indexRef.current !== 0));
+    setHidePrev(indexRef.current === 0);
+    setHideNext(indexRef.current === songs.length - 1);
   }, [playing, songs]);
 
   const prevFunction = () => updatePlayingSong(indexRef.current - 1);
@@ -85,18 +81,19 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
       setIsPlaying(false);
     }
   };
-  
 
   return (
     <div className='PlaySong'>
       <div
+        className='image'
         style={{
           backgroundImage: `url(${baseURL}/song/get/image/${playing.id})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
-        }} className='image'
+        }}
       />
-      <h2>{(playing.name?.length > 14 && window.innerWidth < 768) ? playing.name.slice(0, 14) + ".." : playing.name}</h2>
+      <h2>{playing.name}</h2>
+      
       <div className='player'>
         <AudioSlider
           url={`${baseURL}/song/play/${playing.id}`}
@@ -108,40 +105,36 @@ function PlaySong({ playAll, song, songs, playing, setPlaying, addToCollection }
       </div>
 
       <div className='playControl'>
-        <button className='addSong' onClick={addToCollection}>+</button>
+        <button className='addSong' onClick={addToCollection} title="Add to collection">+</button>
         <button
           className='prev'
           disabled={hidePrev}
           onClick={prevFunction}
           style={{
             backgroundImage: `url(${prevImg})`,
-            backgroundSize: 'cover',
+            backgroundSize: '30px',
+            backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center'
           }}
         />
-        {
-          (!isPlaying) ?
-          <button onClick={handlePlayPause} style={{
-            backgroundImage:`url(${playIcon})`,
-            backgroundSize: 'cover',
+        <button 
+          onClick={handlePlayPause} 
+          className="playButton"
+          style={{
+            backgroundImage:`url(${isPlaying ? pauseIcon : playIcon})`,
+            backgroundSize: '30px',
+            backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center'
-          }} className="playButton">
-          </button> 
-        : 
-          <button onClick={handlePlayPause} style={{
-            backgroundImage:`url(${pauseIcon})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }} className="playButton">
-        </button>
-        }
+          }}
+        />
         <button
           className='next'
           disabled={hideNext}
           onClick={nextFunction}
           style={{
             backgroundImage: `url(${nextImg})`,
-            backgroundSize: 'cover',
+            backgroundSize: '30px',
+            backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center'
           }}
         />

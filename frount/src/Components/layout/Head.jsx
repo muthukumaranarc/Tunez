@@ -1,7 +1,7 @@
-import './Head.css';
-import menu from '../assets/Menu.png';
-import logo from '../assets/Only_Logo_NoBackground.png';
-import search from '../assets/search.png';
+import '../../styles/Head.css';
+import menu from '../../assets/Menu.png';
+import logo from '../../assets/Only_Logo_NoBackground.png';
+import search from '../../assets/search.png';
 import { useEffect, useState } from 'react';
 
 function Head({ page, setPage, menuState, setMenuState, setLogbut, user, picUrl, setSearchStatus, searchStatus, setSearchData }) {

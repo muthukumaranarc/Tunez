@@ -1,7 +1,7 @@
-import Home from "./Components/Land";
-import './App.css';
+import Home from "./pages/MainLayout";
+import './styles/App.css';
 import { useEffect, useState } from 'react';
-import Loader from "./Components/Loader";
+import Loader from "./components/layout/Loader";
 
 
 function App() {
@@ -29,10 +29,6 @@ function App() {
 
   let [load, setLoad] = useState(true);
 
-  setTimeout(() => {
-    setLoad(false);
-  }, 3000);
-
      useEffect(() => {
     const handleWheel = (e) => {
       if (e.ctrlKey) e.preventDefault();
@@ -58,7 +54,7 @@ function App() {
         {
           load ?  <Loader /> : <></>
         }
-        <Home />
+        <Home setLoad={setLoad} />
       </>
     );
 }

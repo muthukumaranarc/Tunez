@@ -1,8 +1,9 @@
 // import { useEffect, useState } from 'react';
-import './Category.css';
+import '../../styles/Category.css';
+import API_BASE_URL from '../../api/apiConfig';
 
 function Category({setCollView}){
-     const baseURL = import.meta.env.VITE_API_URL;
+     const baseURL = API_BASE_URL;
     const repeat = ["Happy", "Motivation", "Love", "Mass", "Devotional", "Sad","Romance" , "Fun", "Melody", "Follk"];
 
     const handleClick = (data) => {

@@ -1,0 +1,57 @@
+/* Modern Audio Player Styles */
+.rhap_container {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.rhap_main-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.rhap_progress-section {
+    margin-bottom: 0 !important;
+}
+
+.rhap_progress-bar {
+    height: 6px !important;
+    background-color: var(--surface-color) !important;
+    border-radius: 3px !important;
+}
+
+.rhap_progress-filled {
+    background-color: var(--primary-color) !important;
+    background-image: var(--primary-gradient) !important;
+}
+
+.rhap_download-progress {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.rhap_progress-indicator {
+    width: 14px !important;
+    height: 14px !important;
+    top: -4px !important;
+    background: var(--text-main) !important;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
+}
+
+.rhap_controls-section {
+    display: none !important; /* We use our own controls in PlaySong */
+}
+
+.rhap_time {
+    color: var(--text-muted) !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+.rhap_current-time {
+    margin-right: 10px !important;
+}
+
+.rhap_total-time {
+    margin-left: 10px !important;
+}

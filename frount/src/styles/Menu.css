@@ -1,0 +1,131 @@
+.menuBar {
+    width: 260px;
+    height: calc(100vh - 70px);
+    background: var(--bg-color);
+    border-right: 1px solid var(--glass-border);
+    padding: 1.5rem 1rem;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    z-index: 90;
+    transition: var(--transition-slow);
+}
+
+.menuBar > button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.menuBar > button:hover {
+    background: var(--surface-color);
+}
+
+.menuBar > button img {
+    width: 22px;
+    height: 22px;
+    filter: invert(0.7);
+    transition: var(--transition-fast);
+}
+
+.menuBar > button h2 {
+    margin-left: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.menuBar > button:hover h2 {
+    color: var(--text-main);
+}
+
+.menuBar > button:hover img {
+    filter: invert(1);
+}
+
+/* Active State */
+.show {
+    height: 24px;
+    width: 4px;
+    background: var(--primary-gradient);
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.menuBar > button[data-active="true"] {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.menuBar > button[data-active="true"] h2 {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.menuBar > button[data-active="true"] img {
+    filter: invert(1);
+}
+
+.menuBar > button[data-active="true"] .show {
+    opacity: 1;
+}
+
+.NewCollDev {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.NewCollDev > button {
+    width: 100%;
+    height: 48px;
+    background: var(--primary-gradient);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    transition: var(--transition-fast);
+}
+
+.NewCollDev > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+@media (max-width: 768px) {
+    .backMenu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 150;
+        display: flex;
+    }
+    
+    .menuBar {
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .NewCollDev {
+        padding-bottom: 2rem;
+    }
+}

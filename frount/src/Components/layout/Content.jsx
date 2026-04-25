@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
-import Category from './Category';
-import Collections from './Collections';
-import CollectionsViewer from './CollectionsViewer';
-import Explore from './Explorer';
-import Home from './Home';
-import PlaySong from './PlaySong.jsx';
-import './Content.css';
-import Setings from './Setings.jsx';
-import Search from './Search.jsx';
+import Category from '../shared/Category';
+import Collections from '../../pages/Collections';
+import CollectionsViewer from '../../pages/CollectionsViewer';
+import Explore from '../../pages/Explorer';
+import Home from '../../pages/Home';
+import PlaySong from '../shared/PlaySong.jsx';
+import '../../styles/Content.css';
+import Setings from '../../pages/Setings.jsx';
+import Search from '../../pages/Search.jsx';
+import API_BASE_URL from '../../api/apiConfig';
 
-function Content({ page , collView, setCollView, user, picUrl, setLogbut, get, setGet, searchStatus, searchData, setSearchStatus}) {
-  const baseURL = import.meta.env.VITE_API_URL;
+function Content({ page , collView, setCollView, user, picUrl, setLogbut, get, setGet, searchStatus, searchData, setSearchStatus, setLoad}) {
+  const baseURL = API_BASE_URL;
 
   const [playAll, setPlayAll] = useState(false);
   const [song, setSong] = useState({});
@@ -35,49 +36,37 @@ function Content({ page , collView, setCollView, user, picUrl, setLogbut, get, s
   const [collError, setCollError] = useState("");
   const [adding, setAdding] = useState(false);
 
-  
-
-  // Quick Pick
+  // Initial Data Loading
   useEffect(() => {
-    fetch(`${baseURL}/song/get/all/30`)
-      .then(res => res.json())
-      .then(data => setQuickPick(data))
-      .catch(err => console.error("🔥 Error fetching QuickPick:", err))
-  }, [baseURL]);
+    const fetchData = async () => {
+      const endpoints = [
+        { url: `${baseURL}/song/get/all/30`, setter: setQuickPick, name: "QuickPick" },
+        { url: `${baseURL}/collection/get/all/10`, setter: setCollections, name: "Collections" },
+        { url: `${baseURL}/artist/get/all/10`, setter: setArtists, name: "Artists" },
+        { url: `${baseURL}/collection/get/DailyBeat`, setter: setDailyBeat, name: "DailyBeat" },
+        { url: `${baseURL}/collection/get/NewCollection`, setter: setNewCollection, name: "NewCollection" }
+      ];
 
-  // Collections
-  useEffect(() => {
-    fetch(`${baseURL}/collection/get/all/10`)
-      .then(res => res.json())
-      .then(data => setCollections(data))
-      .catch(err => console.error("🔥 Error fetching Collections:", err))
-  }, [baseURL]);
+      try {
+        await Promise.allSettled(endpoints.map(async ({ url, setter, name }) => {
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            setter(data);
+          } catch (err) {
+            console.error(`🔥 Error fetching ${name}:`, err);
+          }
+        }));
+      } finally {
+        // Set loading to false after a tiny delay for smooth transition
+        setTimeout(() => setLoad(false), 500);
+      }
+    };
 
-  // Artists
-  useEffect(() => {
-    fetch(`${baseURL}/artist/get/all/10`)
-      .then(res => res.json())
-      .then(data => setArtists(data))
-      .catch(err => console.error("🔥 Error fetching Artists:", err))
-  }, [baseURL]);
+    fetchData();
+  }, [baseURL, setLoad]);
 
-  // Daily Beat
-  useEffect(() => {
-    fetch(`${baseURL}/collection/get/DailyBeat`)
-      .then(res => res.json())
-      .then(data => setDailyBeat(data))
-      .catch(err => console.error("🔥 Error fetching DailyBeat:", err))
-  }, [baseURL]);
-
-  // New Collection
-  useEffect(() => {
-    fetch(`${baseURL}/collection/get/NewCollection`)
-      .then(res => res.json())
-      .then(data => setNewCollection(data))
-      .catch(err => console.error("🔥 Error fetching NewCollection:", err))
-  }, [baseURL]);
-
-  // Private Collection (with cookies)
+  // Private Collection (with cookies) - kept separate as it might depend on session/user
   useEffect(() => {
     setPrivateCollLoading(true);
     fetch(`${baseURL}/privateCollection/get/all`, {
