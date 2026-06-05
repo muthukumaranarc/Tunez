@@ -7,9 +7,9 @@ import set from '../../assets/gear.png';
 function Menu({setMenuState, page, setPage , setCollView, setGet,  setSearchStatus}) {
 
     const navItems = [
-        { id: "Home", name: "Home", icon: home },
-        { id: "Explorer", name: "Explorer", icon: expo },
-        { id: "Collection", name: "Collection", icon: coll },
+        { id: "Home", name: "Discover", icon: home },
+        { id: "Explorer", name: "Search", icon: expo },
+        { id: "Collection", name: "Library", icon: coll },
         { id: "Setings", name: "Settings", icon: set },
     ];
 
@@ -22,17 +22,23 @@ function Menu({setMenuState, page, setPage , setCollView, setGet,  setSearchStat
 
     const Sidebar = () => (
         <div className='menuBar'>
-            {navItems.map((item) => (
-                <button 
-                    key={item.id} 
-                    onClick={() => handleNav(item.id)}
-                    data-active={page === item.id}
-                >
-                    <div className='show' />
-                    <img src={item.icon} alt={item.name} />
-                    <h2>{item.name}</h2>
-                </button>
-            ))}
+            <div className="sidebar-logo">
+                <span className="logo-text text-gradient">Melodix</span>
+            </div>
+            <div className="sidebar-menu-list">
+                {navItems.map((item) => (
+                    <button 
+                        key={item.id} 
+                        onClick={() => handleNav(item.id)}
+                        data-active={page === item.id}
+                        className="menu-item-btn"
+                    >
+                        <div className='active-indicator' />
+                        <img src={item.icon} alt={item.name} className="menu-icon" />
+                        <h2>{item.name}</h2>
+                    </button>
+                ))}
+            </div>
             <div className='NewCollDev'>
                 <button onClick={() => {setGet(true); setPage("Collection"); setSearchStatus(false); if(window.innerWidth <= 768) setMenuState(false)}}>
                     <p>+ New Collection</p>

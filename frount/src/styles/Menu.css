@@ -1,40 +1,59 @@
 .menuBar {
     width: 260px;
-    height: calc(100vh - 70px);
-    background: var(--bg-color);
+    height: 100vh;
+    background: var(--sidebar-bg);
     border-right: 1px solid var(--glass-border);
-    padding: 1.5rem 1rem;
+    padding: 2.5rem 1.5rem;
     position: fixed;
-    top: 70px;
+    top: 0;
     left: 0;
-    z-index: 90;
+    z-index: 110;
     transition: var(--transition-slow);
+    display: flex;
+    flex-direction: column;
 }
 
-.menuBar > button {
+.sidebar-logo {
+    margin-bottom: 3.5rem;
+    padding-left: 0.5rem;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.sidebar-menu-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-item-btn {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 48px;
     padding: 0 1rem;
     border-radius: 12px;
-    margin-bottom: 0.5rem;
     position: relative;
     transition: var(--transition-fast);
 }
 
-.menuBar > button:hover {
+.menu-item-btn:hover {
     background: var(--surface-color);
 }
 
-.menuBar > button img {
-    width: 22px;
-    height: 22px;
+.menu-icon {
+    width: 20px;
+    height: 20px;
     filter: invert(0.7);
     transition: var(--transition-fast);
 }
 
-.menuBar > button h2 {
+.menu-item-btn h2 {
     margin-left: 1rem;
     font-size: 0.95rem;
     font-weight: 500;
@@ -42,67 +61,70 @@
     transition: var(--transition-fast);
 }
 
-.menuBar > button:hover h2 {
+.menu-item-btn:hover h2 {
     color: var(--text-main);
 }
 
-.menuBar > button:hover img {
+.menu-item-btn:hover .menu-icon {
     filter: invert(1);
 }
 
-/* Active State */
-.show {
-    height: 24px;
-    width: 4px;
+/* Active State Indicator */
+.active-indicator {
+    height: 20px;
+    width: 3.5px;
     background: var(--primary-gradient);
-    border-radius: 2px;
+    border-radius: 1.75px;
     position: absolute;
     left: 0;
     opacity: 0;
     transition: var(--transition-fast);
 }
 
-.menuBar > button[data-active="true"] {
-    background: rgba(99, 102, 241, 0.1);
+.menu-item-btn[data-active="true"] {
+    background: rgba(255, 42, 95, 0.08);
 }
 
-.menuBar > button[data-active="true"] h2 {
+.menu-item-btn[data-active="true"] h2 {
     color: var(--text-main);
     font-weight: 600;
 }
 
-.menuBar > button[data-active="true"] img {
+.menu-item-btn[data-active="true"] .menu-icon {
     filter: invert(1);
 }
 
-.menuBar > button[data-active="true"] .show {
+.menu-item-btn[data-active="true"] .active-indicator {
     opacity: 1;
+    box-shadow: var(--neon-glow);
 }
 
 .NewCollDev {
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--glass-border);
 }
 
 .NewCollDev > button {
     width: 100%;
-    height: 48px;
-    background: var(--primary-gradient);
+    height: 44px;
+    background: rgba(255, 42, 95, 0.1);
+    border: 1px solid rgba(255, 42, 95, 0.3);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 0.9rem;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
     transition: var(--transition-fast);
 }
 
 .NewCollDev > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+    background: var(--primary-gradient);
+    color: white;
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 15px rgba(255, 42, 95, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -112,8 +134,8 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
         z-index: 150;
         display: flex;
     }
@@ -121,11 +143,7 @@
     .menuBar {
         top: 0;
         height: 100vh;
-        width: 280px;
-        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .NewCollDev {
-        padding-bottom: 2rem;
+        width: 260px;
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.7);
     }
 }

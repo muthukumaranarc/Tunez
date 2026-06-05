@@ -70,16 +70,21 @@ function Home({quickPick, collections, artists, dailyBeat, newCollection,setColl
 
     return (
         <div className="Home fade-in">
-            <div className='deColl'>
-                <button className='dailyBeat' onClick={handleDailyBeat}>
-                    <p>Daily Beat</p>
-                    <div style={{ backgroundImage: `url(${baseURL}/song/get/image/${dailyImg?.id})` }} />
-                </button>
-                <button className='ourNew' onClick={handleNewCollection}>
-                    <p>Try our new Collection</p>
-                    <div style={{ backgroundImage: `url(${baseURL}/song/get/image/${newImg?.id})` }} />
-                </button>
+            {/* Featured Hero Banner */}
+            <div className="hero-banner" style={{ backgroundImage: 'linear-gradient(rgba(13, 14, 18, 0.2), rgba(13, 14, 18, 0.95)), url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200")' }}>
+                <div className="hero-content">
+                    <span className="hero-tag">TRENDING NOW</span>
+                    <h1 className="hero-title">Midnight Echoes</h1>
+                    <p className="hero-description">
+                        Dive into a curated selection of late-night rhythms, ethereal beats, and smooth melodies to soundtrack your nights.
+                    </p>
+                    <div className="hero-buttons">
+                        <button className="btn-primary" onClick={handleDailyBeat}>Listen Now</button>
+                        <button className="btn-secondary" onClick={handleNewCollection}>Explore Collection</button>
+                    </div>
+                </div>
             </div>
+
 
             <section className='quickPick'>
                 <div className='section-header'>

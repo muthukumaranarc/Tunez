@@ -16,7 +16,8 @@
 .collection:hover {
     background: var(--surface-hover);
     transform: translateY(-5px);
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: rgba(255, 42, 95, 0.35);
+    box-shadow: var(--neon-glow);
 }
 
 .collection-img {

@@ -16,7 +16,8 @@
 .song:hover {
     background: var(--surface-hover);
     transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: rgba(255, 42, 95, 0.35);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .song > .img-container {

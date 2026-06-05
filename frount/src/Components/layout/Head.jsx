@@ -1,6 +1,5 @@
 import '../../styles/Head.css';
 import menu from '../../assets/Menu.png';
-import logo from '../../assets/Only_Logo_NoBackground.png';
 import search from '../../assets/search.png';
 import { useEffect, useState } from 'react';
 
@@ -12,7 +11,7 @@ function Head({ page, setPage, menuState, setMenuState, setLogbut, user, picUrl,
         setPicture(picUrl);
     }, [picUrl]);
 
-    // 🔹 Interval to read input every 1 sec while searchStatus is true
+    // 🔹 Interval to read input every 0.5 sec while searchStatus is true
     useEffect(() => {
         let interval;
         if (searchStatus) {
@@ -25,46 +24,55 @@ function Head({ page, setPage, menuState, setMenuState, setLogbut, user, picUrl,
 
     return (
         <div className='head'>
-            <button className='menu'>
-                <img src={menu} onClick={() => { setMenuState(!menuState) }} />
+            <button className='menu' onClick={() => setMenuState(!menuState)}>
+                <img src={menu} alt="Toggle Menu" />
             </button>
-            <img src={logo} />
-            <h2>Tunez</h2>
-            {
-                page ? 
-            <div className='search'>
-                <a><img src={search} /></a>
-                <input
-                    type="text"
-                    name="username"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    onFocus={() => { setSearchStatus(true); }}
-                    // onBlur={() => { setSearchStatus(false); }}
-                    autoComplete="off"
-                    className="name"
-                    placeholder="Search songs, collections, artists"
-                />
-            </div> : <></>
-            }
-            {
-                (user == null) ?
-                    <button className='loginHead' onClick={() => { setLogbut(true) }}>
-                        Log in
-                    </button>
-                    :
-                    <div className='userSec'>
-                        <p>{user?.name.split('@')[0]}</p>
-                        <button style={{
+            
+            {/* Logo shown only on mobile when sidebar is closed */}
+            {!menuState && (
+                <div className="mobile-logo-text">Tunez</div>
+            )}
+            
+            {page && (
+                <div className='search-container'>
+                    <div className='search-icon-wrapper'>
+                        <img src={search} alt="Search" />
+                    </div>
+                    <input
+                        type="text"
+                        name="username"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        onFocus={() => setSearchStatus(true)}
+                        autoComplete="off"
+                        className="search-input"
+                        placeholder="Search songs, artists, playlists..."
+                    />
+                </div>
+            )}
+
+            {(user == null) ? (
+                <button className='loginHead' onClick={() => setLogbut(true)}>
+                    Log in
+                </button>
+            ) : (
+                <div className='userSec'>
+                    <p className="user-name">{user?.name.split('@')[0]}</p>
+                    <button 
+                        style={{
                             backgroundImage: `url(${picture})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
-                        }} className='userPro' onClick={() =>{setPage("Setings")}}>
-                        </button>
-                    </div>
-            }
+                        }} 
+                        className='userPro' 
+                        onClick={() => setPage("Setings")}
+                        aria-label="User Profile"
+                    />
+                </div>
+            )}
         </div>
     );
 }
 
 export default Head;
+
